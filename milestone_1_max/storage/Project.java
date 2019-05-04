@@ -1,19 +1,21 @@
 
 package storage;
-
-import storage.Date;
-
-public class prj {
+    
+public class Project {
     private int id;
     private String pName;
     private Date pStartDate;
     private Date pEndDate;
     
-    public prj(int id, String pName, Date pStartDate, Date pEndDate){
+    public Project(int id, String pName, Date pStartDate, Date pEndDate){
         this.id = id;
         this.pName = pName;
         this.pStartDate = pStartDate;
         this.pEndDate = pEndDate;
+    }
+    
+    public void printProject(){
+        System.out.println( pName + " | " + pStartDate.getDate() + " | " + pEndDate.getDate() );
     }
 
     /**
