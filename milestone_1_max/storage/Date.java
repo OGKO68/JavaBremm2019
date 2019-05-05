@@ -37,6 +37,12 @@ public class Date {
         if (this.year < d.year ) return false;
         return true;
     }
+    public boolean isEqualEarlierDate(Date d){
+        if (this.day <= d.day ) return false;
+        if (this.month <= d.month ) return false;
+        if (this.year <= d.year ) return false;
+        return true;
+    }
 
     /**
      * @return int return the day
