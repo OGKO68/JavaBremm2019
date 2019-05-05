@@ -32,16 +32,12 @@ public class Date {
         return true;
     }
     public boolean isEarlierDate(Date d){
-        if (this.day < d.day ) return false;
-        if (this.month < d.month ) return false;
-        if (this.year < d.year ) return false;
-        return true;
+        if (this. year <= d.year && this.month <= d.month && this.day < d.day ) return false;
+        else return true;
     }
     public boolean isEqualEarlierDate(Date d){
-        if (this.day <= d.day ) return false;
-        if (this.month <= d.month ) return false;
-        if (this.year <= d.year ) return false;
-        return true;
+        if (this.year <= d.year && this.month <= d.month && this.day <= d.day ) return false;
+        else return true;
     }
 
     /**

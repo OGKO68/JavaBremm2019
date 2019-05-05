@@ -19,7 +19,7 @@ public class Project {
     }
     
     public void printProject(){
-        System.out.println( pName + " | " + pStartDate.getDate() + " | " + pEndDate.getDate() );
+        System.out.println( pName + " | " + pStartDate.getDate() + " | " + pEndDate.getDate() + " | " + id );
     }
 
     /**
