@@ -1,0 +1,45 @@
+ubuntu@LAPTOP-UMM2NML8:/mnt/c/Users/berry/Documents/GitHub/JavaBremm2019$ cd milestone_1_max/
+ubuntu@LAPTOP-UMM2NML8:/mnt/c/Users/berry/Documents/GitHub/JavaBremm2019/milestone_1_max$ cd storage/
+ubuntu@LAPTOP-UMM2NML8:/mnt/c/Users/berry/Documents/GitHub/JavaBremm2019/milestone_1_max/storage$ javac Date.java
+ubuntu@LAPTOP-UMM2NML8:/mnt/c/Users/berry/Documents/GitHub/JavaBremm2019/milestone_1_max/storage$ javac Project.java
+Project.java:7: error: cannot find symbol
+    private Date pStartDate;
+            ^
+  symbol:   class Date
+  location: class Project
+Project.java:8: error: cannot find symbol
+    private Date pEndDate;
+            ^
+  symbol:   class Date
+  location: class Project
+Project.java:14: error: cannot find symbol
+    public Project(int id, String pName, Date pStartDate, Date pEndDate){
+                                         ^
+  symbol:   class Date
+  location: class Project
+Project.java:14: error: cannot find symbol
+    public Project(int id, String pName, Date pStartDate, Date pEndDate){
+                                                          ^
+  symbol:   class Date
+  location: class Project
+Project.java:56: error: cannot find symbol
+    public Date getPStartDate() {
+           ^
+  symbol:   class Date
+  location: class Project
+Project.java:63: error: cannot find symbol
+    public void setPStartDate(Date pStartDate) {
+                              ^
+  symbol:   class Date
+  location: class Project
+Project.java:70: error: cannot find symbol
+    public Date getPEndDate() {
+           ^
+  symbol:   class Date
+  location: class Project
+Project.java:77: error: cannot find symbol
+    public void setPEndDate(Date pEndDate) {
+                            ^
+  symbol:   class Date
+  location: class Project
+8 errors
