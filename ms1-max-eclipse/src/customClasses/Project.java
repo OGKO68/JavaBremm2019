@@ -1,8 +1,14 @@
+/**
+ * 
+ */
+package customClasses;
 
-package storage;
-
+/**
+ * @author Max
+ *
+ */
 public class Project {
-    private int id;
+	private int id;
     private String pName;
     private Date pStartDate;
     private Date pEndDate;
