@@ -3,7 +3,6 @@ package storage;
 /**
  * date
  */
-
 public class Date {
     private int day;
     private int month;
@@ -14,11 +13,13 @@ public class Date {
         this.month = month;
         this.year = year;
     }
+
     public Date(){
         this.day = 1;
         this.month = 1;
         this.year = 1970; 
     }
+
     public void printDate(){
         System.out.println(year + "/" + month + "/" + day );
     }
@@ -49,8 +50,15 @@ public class Date {
     }
   
     public boolean isEqualEarlierDate(Date d){
-        if (this.year <= d.year && this.month <= d.month && this.day <= d.day ) return false;
-        else return true;
+        if( this.year < d.year ) return true;
+        else if ( this.year == d.year ){
+            if ( this.month < d.month ) return true;
+            else if ( this.month == d.month ){
+                if(this.day < d.day) return true;
+                else if (this.day == d.day ) return true;
+                else return false;
+            } else return false;
+        } else return false;
     }
 
     /**

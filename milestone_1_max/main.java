@@ -66,7 +66,7 @@ public class main {
                     System.out.println( "All upcoming projects" );
                     System.out.println( "---------------------------------------------------------------" );
                     for ( int i = 0; i < oVector.size(); i++ ) {
-                        if( oVector.elementAt(i).getPStartDate().isEarlierDate( today ) ) oVector.elementAt(i).printProject();
+                        if( today.isEarlierDate( oVector.elementAt(i).getPStartDate() ) ) oVector.elementAt(i).printProject();
                     } 
                     break;
                 
@@ -75,7 +75,7 @@ public class main {
                     System.out.println("All past projects");
                     System.out.println("---------------------------------------------------------------");
                     for (int i = 0; i < oVector.size(); i++) {
-                        if ( today.isEqualEarlierDate(oVector.elementAt(i).getPEndDate() ) ) oVector.elementAt(i).printProject();
+                        if ( oVector.elementAt(i).getPEndDate().isEqualEarlierDate( today ) ) oVector.elementAt(i).printProject();
                     }
                     break;
                 
@@ -128,7 +128,7 @@ public class main {
             String end = "end";
             pStartDate = scanDate(sc, start);
             pEndDate = scanDate(sc, end);
-            while( pStartDate.isEarlierDate(pEndDate)){
+            while( ! pStartDate.isEarlierDate(pEndDate)){
                 System.out.println("---------------------------------------------------------------");
                 System.out.println("there might have been an error let's check that again");
                 System.out.println("---------------------------------------------------------------");
