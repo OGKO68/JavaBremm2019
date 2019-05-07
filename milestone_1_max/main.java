@@ -21,7 +21,7 @@ public class main {
         /**This is the menu routine */
         while(true){
             menutext();
-            switch ( Integer.parseInt(sc.nextLine()) ) {
+            switch ( Integer.parseInt( sc.nextLine() ) ) {
                 case 1:
                     oVector.add ( createProject( sc, oVector, hSet ) );
                     hSet.add( oVector.elementAt( oVector.size()-1 ).getPName());
@@ -32,7 +32,7 @@ public class main {
                 System.out.println("---------------------------------------------------------------");
                 System.out.println( "please enter the PID number" );
                 System.out.println("---------------------------------------------------------------");
-                oVector.remove( sc.nextInt() );
+                oVector.remove( Integer.parseInt( sc.nextLine() ) );
                 System.out.println("Project has been removed");
                 System.out.println("---------------------------------------------------------------");
                 break;
@@ -143,8 +143,10 @@ public class main {
             System.out.println("----------------------");
             return createProject(sc, oVector, hSet);
         }
-
-        Project createProject = new Project(oVector.size(), pname, pStartDate, pEndDate);
+        int pid = 0;
+        if (oVector.size() == 0 ) pid = 0;
+        else pid = oVector.elementAt(oVector.size()-1).getId() + 1;
+        Project createProject = new Project(pid, pname, pStartDate, pEndDate);
         System.out.println("---------------------------------------------------------------");
         System.out.println("you created project is");
         createProject.printProject();
