@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
+import java.text.BreakIterator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import storage.*;
@@ -19,82 +20,9 @@ public class main {
         hSet.add( oVector.elementAt(0).getPName() );
         //oVector.elementAt(0).printProject();
         /**This is the menu routine */
-        while(true){
-            menutext();
-            switch ( Integer.parseInt( sc.nextLine() ) ) {
-                case 1:
-                    oVector.add ( createProject( sc, oVector, hSet ) );
-                    hSet.add( oVector.elementAt( oVector.size()-1 ).getPName());
-                    if( oVector.size() == 0 ) System.out.println("no projects");
-                break;
-
-                case 2:
-                System.out.println("---------------------------------------------------------------");
-                System.out.println( "please enter the PID number" );
-                System.out.println("---------------------------------------------------------------");
-                oVector.remove( Integer.parseInt( sc.nextLine() ) );
-                System.out.println("Project has been removed");
-                System.out.println("---------------------------------------------------------------");
-                break;
-
-                case 3:
-                    System.out.println( "---------------------------------------------------------------" );
-                    System.out.println( "All listed projects" );
-                    System.out.println( "---------------------------------------------------------------" );
-                    for ( int i = 0; i < oVector.size(); i++ ){
-                        oVector.elementAt(i).printProject();
-                        //the reminace of a quick and dirty solution
-                        //pro = (Project) oVector.elementAt(i); //Thanks Kevin Kopp for helping out and telling me to cast because I didn't need to in the vector sample+
-                        //pro.printProject();
-                    }
-                    System.out.println( "---------------------------------------------------------------" );
-                    break;
-                
-                case 4:
-                    System.out.println( "---------------------------------------------------------------" );
-                    System.out.println( "All current projects" );
-                    System.out.println( "---------------------------------------------------------------" );
-                    boolean b = false;
-                    for ( int i = 0; i < oVector.size(); i++ ) {
-                        b = today.isEqualEarlierDate( oVector.elementAt(i).getPEndDate() ) && oVector.elementAt(i).getPStartDate().isEqualEarlierDate( today ) ;
-                        if( b ) oVector.elementAt(i).printProject();
-                    }
-                    break;
-            
-                case 5: 
-                    System.out.println( "---------------------------------------------------------------" );
-                    System.out.println( "All upcoming projects" );
-                    System.out.println( "---------------------------------------------------------------" );
-                    for ( int i = 0; i < oVector.size(); i++ ) {
-                        if( today.isEarlierDate( oVector.elementAt(i).getPStartDate() ) ) oVector.elementAt(i).printProject();
-                    } 
-                    break;
-                
-                case 6:
-                    System.out.println("---------------------------------------------------------------");
-                    System.out.println("All past projects");
-                    System.out.println("---------------------------------------------------------------");
-                    for (int i = 0; i < oVector.size(); i++) {
-                        if ( oVector.elementAt(i).getPEndDate().isEqualEarlierDate( today ) ) oVector.elementAt(i).printProject();
-                    }
-                    break;
-                
-                case 7:
-                    System.out.println("---------------------------------------------------------------");
-                    System.out.println("are you sure, all you Projects will be lost");
-                    System.out.println("type \"confirm\" to close the program");
-                    System.out.println("---------------------------------------------------------------");
-                    String closeDiagString = sc.nextLine();
-                    if( closeDiagString.equals("confirm") ) {
-                        sc.close();
-                        return;
-                    } else break;
-                    
-                default:
-                    System.out.println( "this was not a valid selection" );
-                    break;
-            }
-        }
+        looper(oVector, hSet, sc, today);
+        //anything beyond this point will not be exceuted
+        return ;
     }
 
     public static void menutext(){
@@ -109,6 +37,9 @@ public class main {
         System.out.println("6 | list past prjects");
         System.out.println("7 | end the programm");
         System.out.println("---------------------------------------------------------------");
+        System.out.println(" please only enter a number without spaces like \'8\'");
+        System.out.println("---------------------------------------------------------------");
+
     }
 
     public static Vector<Project> gettigStarted(Scanner sc, HashSet<String> hSet) {
@@ -135,7 +66,7 @@ public class main {
                 pStartDate = scanDate(sc, start);
                 pEndDate = scanDate(sc, end);
             }
-        } catch (ArrayIndexOutOfBoundsException | InputMismatchException e) {
+        } catch (ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
             System.out.println("----------------------");
             System.err.println("|inproper date format|");
             System.out.println("----------------------");
@@ -196,6 +127,143 @@ public class main {
         Date todayDate = new Date(Integer.parseInt(todayString[0]), Integer.parseInt(todayString[1]), Integer.parseInt(todayString[2]) );
         //todayDate.printDate();
         return todayDate;
+    }
+
+    public static void looper(Vector<Project> oVector, HashSet hSet, Scanner sc, Date today){
+        int locId = 0;
+        while(true){
+
+            menutext();
+
+            switch ( nlInt(sc) ) {
+                case 1:/**this creates new projects */
+                    oVector.add ( createProject( sc, oVector, hSet ) );
+                    hSet.add( oVector.elementAt( oVector.size()-1 ).getPName());
+                    
+                break;
+
+                case 2: /**this deltes projects found bz id */
+                if (oVector.size() == 0 ){
+                    System.out.println("there is no project that can be deleted");
+                    break;
+                }
+                System.out.println("---------------------------------------------------------------");
+                System.out.println( "please enter the PID number" );
+                System.out.println("---------------------------------------------------------------");
+                locId = findElementById( oVector, sc );
+                hSet.remove(oVector.elementAt(locId).getPName());
+                oVector.remove( locId );
+                System.out.println("---------------------------------------------------------------");
+                System.out.println("Project has been removed");
+                System.out.println("---------------------------------------------------------------");
+                break;
+
+                case 3:/**this lists all listed projects */
+                    System.out.println( "---------------------------------------------------------------" );
+                    System.out.println( "All listed projects" );
+                    System.out.println( "---------------------------------------------------------------" );
+                    for ( int i = 0; i < oVector.size(); i++ ){
+                        oVector.elementAt(i).printProject();
+                        //the reminace of a quick and dirty solution
+                        //pro = (Project) oVector.elementAt(i); //Thanks Kevin Kopp for helping out and telling me to cast because I didn't need to in the vector sample+
+                        //pro.printProject();
+                    }
+                    if( oVector.size() == 0 ) System.out.println("no projects");
+                    System.out.println( "---------------------------------------------------------------" );
+                    System.out.println("");
+                    break;
+                
+                case 4:/**this lists all current projects */
+                    System.out.println( "---------------------------------------------------------------" );
+                    System.out.println( "All current projects" );
+                    System.out.println( "---------------------------------------------------------------" );
+                    boolean b = false;
+                    for ( int i = 0; i < oVector.size(); i++ ) {
+                        b = today.isEqualEarlierDate( oVector.elementAt(i).getPEndDate() ) && oVector.elementAt(i).getPStartDate().isEqualEarlierDate( today ) ;
+                        if( b ) oVector.elementAt(i).printProject();
+                    }
+                    break;
+            
+                case 5:/**this lists all upcoming projects */ 
+                    System.out.println( "---------------------------------------------------------------" );
+                    System.out.println( "All upcoming projects" );
+                    System.out.println( "---------------------------------------------------------------" );
+                    for ( int i = 0; i < oVector.size(); i++ ) {
+                        if( today.isEarlierDate( oVector.elementAt(i).getPStartDate() ) ) oVector.elementAt(i).printProject();
+                    } 
+                    break;
+                
+                case 6:/**this lists all past projects */
+                    System.out.println("---------------------------------------------------------------");
+                    System.out.println("All past projects");
+                    System.out.println("---------------------------------------------------------------");
+                    for (int i = 0; i < oVector.size(); i++) {
+                        if ( oVector.elementAt(i).getPEndDate().isEqualEarlierDate( today ) ) oVector.elementAt(i).printProject();
+                    }
+                    break;
+                
+                case 7:/**this is a name change */
+                System.out.println("---------------------------------------------------------------");                    
+                System.out.println("edit project name by id");
+                System.out.println("---------------------------------------------------------------");
+                locId = findElementById(oVector, sc);
+                hSet.remove( oVector.elementAt(locId).getPName() );
+                oVector.elementAt(locId).setPName(getPNameString(oVector, sc, hSet));
+                break;
+                
+                case 8 : /**this is a start date change */ 
+                    System.out.println("---------------------------------------------------------------");
+                    System.out.println("enter start date by id");
+                    System.out.println("---------------------------------------------------------------");
+                    locId = findElementById(oVector, sc);
+                    
+                    break;
+
+                case 9: /**this is a end date change */
+                    System.out.println("---------------------------------------------------------------");
+                    System.out.println("enter start date by id");
+                    System.out.println("---------------------------------------------------------------");
+                    locId = findElementById(oVector, sc);
+
+                    break;
+
+                case 10: /**this is the exit */
+                    System.out.println("---------------------------------------------------------------");
+                    System.out.println("are you sure, all you Projects will be lost");
+                    System.out.println("type \"confirm\" to close the program");
+                    System.out.println("---------------------------------------------------------------");
+                    String closeDiagString = sc.nextLine();
+                    if( closeDiagString.equals("confirm") ) {
+                        sc.close();
+                        return;
+                    } else break;
+                    
+                default:
+                    System.out.println( "this was not a valid selection" );
+                    break;
+            }
+
+        }
+
+    }
+
+    public static int findElementById( Vector<Project> oVector, Scanner sc){
+        int pid = nlInt(sc);
+        for (int i = 0; i < oVector.size() ; i++){
+            if ( oVector.elementAt(i).getId() == pid  ){
+                pid = i;
+                break;
+            }
+        }
+        return pid;
+    }
+
+    public static int nlInt(Scanner sc){
+        try {
+            return Integer.parseInt( sc.nextLine() ) ;
+        } catch ( InputMismatchException | NumberFormatException e) {
+            return nlInt(sc);
+        }
     }
 
 }
