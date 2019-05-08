@@ -35,7 +35,10 @@ public class main {
         System.out.println("4 | list current projects");
         System.out.println("5 | list upcoming projects");
         System.out.println("6 | list past prjects");
-        System.out.println("7 | end the programm");
+        System.out.println("7 | change name of a specific project");
+        System.out.println("8 | change start date of a specific project");
+        System.out.println("9 | change end date of a specific project");
+        System.out.println("10 | end the programm");
         System.out.println("---------------------------------------------------------------");
         System.out.println(" please only enter a number without spaces like \'8\'");
         System.out.println("---------------------------------------------------------------");
@@ -54,7 +57,7 @@ public class main {
         Date pEndDate = new Date();
         Date pStartDate = new Date();
         //please refactor later this is not optimal, there should be a recoursive solution
-        try {
+        //try {
             String start = "start";
             String end = "end";
             pStartDate = scanDate(sc, start);
@@ -66,14 +69,14 @@ public class main {
                 pStartDate = scanDate(sc, start);
                 pEndDate = scanDate(sc, end);
             }
-        } catch (ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
+        /*} catch (ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
             System.out.println("----------------------");
             System.err.println("|inproper date format|");
             System.out.println("----------------------");
             System.out.println("| restarting creator |");
             System.out.println("----------------------");
             return createProject(sc, oVector, hSet);
-        }
+        }*/
         int pid = 0;
         if (oVector.size() == 0 ) pid = 0;
         else pid = oVector.elementAt(oVector.size()-1).getId() + 1;
@@ -89,10 +92,20 @@ public class main {
     public static Date scanDate( Scanner sc, String dateType ) throws ArrayIndexOutOfBoundsException {
         System.out.println("so whats the " + dateType + " date");
         System.out.println("please enter date like (YYYY/MM/DD)");
-        String[] inDate = sc.nextLine().split("/");
-        // litte date validation, not in depth but the biggest mistakes will be stoped
-        Date scDate = new Date(Integer.parseInt(inDate[0]), Integer.parseInt(inDate[1]), Integer.parseInt(inDate[2]) );
-        if( Integer.parseInt(inDate[1]) > 12 || Integer.parseInt(inDate[2]) > 31) scDate = scanDate(sc, dateType);
+        Date scDate = new Date();
+        try {
+            
+            String[] inDate = sc.nextLine().split("/");
+            
+            scDate = new Date(Integer.parseInt(inDate[0]), Integer.parseInt(inDate[1]), Integer.parseInt(inDate[2]) );
+
+            // litte date validation, not in depth but the biggest mistakes will be stoped
+            if( Integer.parseInt(inDate[1]) > 12 || Integer.parseInt(inDate[2]) > 31) return scanDate(sc, dateType);
+       
+        } catch( ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
+            return scanDate(sc, dateType);
+        }
+
         return scDate;
     }
 
@@ -114,6 +127,7 @@ public class main {
     }
 
     public static Date getToday() {
+
         System.out.println("---------------------------------------------------------------");
         System.out.println("|This Program uses LocalDate so the date might be one day off.|");
         System.out.println("---------------------------------------------------------------");
@@ -131,6 +145,7 @@ public class main {
 
     public static void looper(Vector<Project> oVector, HashSet hSet, Scanner sc, Date today){
         int locId = 0;
+        Date locDate = new Date();
         while(true){
 
             menutext();
@@ -143,20 +158,20 @@ public class main {
                 break;
 
                 case 2: /**this deltes projects found bz id */
-                if (oVector.size() == 0 ){
-                    System.out.println("there is no project that can be deleted");
+                    if (oVector.size() == 0 ){
+                        System.out.println("there is no project that can be deleted");
+                        break;
+                    }
+                    System.out.println("---------------------------------------------------------------");
+                    System.out.println( "please enter the PID number" );
+                    System.out.println("---------------------------------------------------------------");
+                    locId = findElementById( oVector, sc );
+                    hSet.remove(oVector.elementAt(locId).getPName());
+                    oVector.remove( locId );
+                    System.out.println("---------------------------------------------------------------");
+                    System.out.println("Project has been removed");
+                    System.out.println("---------------------------------------------------------------");
                     break;
-                }
-                System.out.println("---------------------------------------------------------------");
-                System.out.println( "please enter the PID number" );
-                System.out.println("---------------------------------------------------------------");
-                locId = findElementById( oVector, sc );
-                hSet.remove(oVector.elementAt(locId).getPName());
-                oVector.remove( locId );
-                System.out.println("---------------------------------------------------------------");
-                System.out.println("Project has been removed");
-                System.out.println("---------------------------------------------------------------");
-                break;
 
                 case 3:/**this lists all listed projects */
                     System.out.println( "---------------------------------------------------------------" );
@@ -203,28 +218,41 @@ public class main {
                     break;
                 
                 case 7:/**this is a name change */
-                System.out.println("---------------------------------------------------------------");                    
-                System.out.println("edit project name by id");
-                System.out.println("---------------------------------------------------------------");
-                locId = findElementById(oVector, sc);
-                hSet.remove( oVector.elementAt(locId).getPName() );
-                oVector.elementAt(locId).setPName(getPNameString(oVector, sc, hSet));
-                break;
+                    System.out.println("---------------------------------------------------------------");                    
+                    System.out.println("edit project name by id");
+                    System.out.println("---------------------------------------------------------------");
+                    locId = findElementById(oVector, sc);
+                    hSet.remove( oVector.elementAt(locId).getPName() );
+                    oVector.elementAt(locId).setPName(getPNameString(oVector, sc, hSet));
+                    break;
                 
                 case 8 : /**this is a start date change */ 
                     System.out.println("---------------------------------------------------------------");
-                    System.out.println("enter start date by id");
+                    System.out.println("which start date would you like to change( refered to by id number )");
                     System.out.println("---------------------------------------------------------------");
                     locId = findElementById(oVector, sc);
-                    
+                    System.out.println("---------------------------------------------------------------");
+                    locDate = scanDate(sc, "start");
+                    if (locDate.isEqualEarlierDate(oVector.elementAt(locId).getPEndDate())){ 
+                        oVector.elementAt(locId).setPStartDate(locDate);
+                        System.out.println("success");
+                        System.out.println("---------------------------------------------------------------\n");
+                    }
+                    else System.out.println("there was a an issue \n --------------------------------------------------------------- ");
                     break;
 
                 case 9: /**this is a end date change */
                     System.out.println("---------------------------------------------------------------");
-                    System.out.println("enter start date by id");
+                    System.out.println("which end date would you like to change( refered to by id number )");
                     System.out.println("---------------------------------------------------------------");
                     locId = findElementById(oVector, sc);
-
+                    locDate = scanDate(sc, "end");
+                    if ( ! locDate.isEarlierDate(oVector.elementAt(locId).getPStartDate())){ 
+                        oVector.elementAt(locId).setPEndDate(locDate);
+                        System.out.println("success");
+                        System.out.println("---------------------------------------------------------------\n");                        
+                    } 
+                    else System.out.println("there was a an issue \n --------------------------------------------------------------- ");
                     break;
 
                 case 10: /**this is the exit */
