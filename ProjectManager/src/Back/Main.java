@@ -100,7 +100,7 @@ public class Main {
             scDate = new Date(Integer.parseInt(inDate[0]), Integer.parseInt(inDate[1]), Integer.parseInt(inDate[2]) );
 
             // litte date validation, not in depth but the biggest mistakes will be stoped
-            if( Integer.parseInt(inDate[1]) > 12 || Integer.parseInt(inDate[2]) > 31) return scanDate(sc, dateType);
+            if( Integer.parseInt(inDate[1]) > 12 || Integer.parseInt(inDate[2]) > 31 || Integer.parseInt(inDate[1]) > 0 || Integer.parseInt(inDate[2]) > 0 ) return scanDate(sc, dateType);
        
         } catch( ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
             return scanDate(sc, dateType);
