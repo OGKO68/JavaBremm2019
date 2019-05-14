@@ -1,11 +1,12 @@
+
 package Back;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import BackPack.*;
+
 
 public class Main {
     public static void main( String[] args ) {
@@ -15,11 +16,11 @@ public class Main {
         System.out.println("Today is");
         today.printDate();
         HashSet<String> hSet = new HashSet<String>();
-        Vector<Project> oVector = gettigStarted( sc, hSet); //thanks to Ahmet Altundag for explaining me the need for the second wildcard. After NodeJS I kinda forgot about this thing 
-        hSet.add( oVector.elementAt(0).getPName() );
-        //oVector.elementAt(0).printProject();
+        ArrayList<Project> oArrayList = gettigStarted( sc, hSet); //thanks to Ahmet Altundag for explaining me the need for the second wildcard. After NodeJS I kinda forgot about this thing 
+        hSet.add( oArrayList.get(0).getPName() );
+        //oArrayList.get(0).printProject();
         /**This is the menu routine */
-        looper(oVector, hSet, sc, today);
+        looper(oArrayList, hSet, sc, today);
         //anything beyond this point will not be exceuted
         return ;
     }
@@ -28,15 +29,15 @@ public class Main {
         System.out.println("---------------------------------------------------------------");
         System.out.println("now choose between");
         System.out.println("---------------------------------------------------------------");
-        System.out.println("1 | create new Project ");
-        System.out.println("2 | delete Prject by id");
+        System.out.println("1 | create new project ");
+        System.out.println("2 | delete project by id");
         System.out.println("3 | list all projects");
         System.out.println("4 | list current projects");
         System.out.println("5 | list upcoming projects");
-        System.out.println("6 | list past prjects");
-        System.out.println("7 | change name of a specific project");
-        System.out.println("8 | change start date of a specific project");
-        System.out.println("9 | change end date of a specific project");
+        System.out.println("6 | list past projects");
+        System.out.println("7 | change project name by id");
+        System.out.println("8 | change project start by id");
+        System.out.println("9 | change project end by id");
         System.out.println("10 | end the programm");
         System.out.println("---------------------------------------------------------------");
         System.out.println(" please only enter a number without spaces like \'8\'");
@@ -44,15 +45,15 @@ public class Main {
 
     }
 
-    public static Vector<Project> gettigStarted(Scanner sc, HashSet<String> hSet) {
-        Vector<Project> oVector = new Vector<Project>();
+    public static ArrayList<Project> gettigStarted(Scanner sc, HashSet<String> hSet) {
+        ArrayList<Project> oArrayList = new ArrayList<Project>();
         System.out.println("Let's start you with a new Project here");
-        oVector.add(createProject(sc, oVector, hSet));
-        return oVector;
+        oArrayList.add(createProject(sc, oArrayList, hSet));
+        return oArrayList;
     }
 
-    public static Project createProject(Scanner sc, Vector<Project> oVector, HashSet<String> hSet) {
-        String pname = getPNameString(oVector, sc, hSet);
+    public static Project createProject(Scanner sc, ArrayList<Project> oArrayList, HashSet<String> hSet) {
+        String pname = getPNameString(oArrayList, sc, hSet);
         Date pEndDate = new Date();
         Date pStartDate = new Date();
         //please refactor later this is not optimal, there should be a recoursive solution
@@ -74,11 +75,11 @@ public class Main {
             System.out.println("----------------------");
             System.out.println("| restarting creator |");
             System.out.println("----------------------");
-            return createProject(sc, oVector, hSet);
+            return createProject(sc, oArrayList, hSet);
         }*/
         int pid = 0;
-        if (oVector.size() == 0 ) pid = 0;
-        else pid = oVector.elementAt(oVector.size()-1).getId() + 1;
+        if (oArrayList.size() == 0 ) pid = 0;
+        else pid = oArrayList.get(oArrayList.size()-1).getId() + 1;
         Project createProject = new Project(pid, pname, pStartDate, pEndDate);
         System.out.println("---------------------------------------------------------------");
         System.out.println("you created project is");
@@ -108,18 +109,18 @@ public class Main {
         return scDate;
     }
 
-    public static String getPNameString(Vector<Project> oVector, Scanner sc, HashSet<String> hSet){
+    public static String getPNameString(ArrayList<Project> oArrayList, Scanner sc, HashSet<String> hSet){
         System.out.println("please enter a project name");
         String pname = sc.nextLine();
         //empty name avoidance - found it here: https://www.tutorialspoint.com/check-if-a-string-is-empty-or-null-in-java
         //also edited to cap singel space hit, I kinda think this is enough
-        if( pname == null || pname.length() == 0 || pname.equals(" ")) return getPNameString(oVector, sc, hSet);
+        if( pname == null || pname.length() == 0 || pname.equals(" ")) return getPNameString(oArrayList, sc, hSet);
         //test if name is taken
         //could be redone with sets but this works for now
-        for (int i = 0; i < oVector.size(); i++) {
+        for (int i = 0; i < oArrayList.size(); i++) {
             if ( hSet.contains(pname) ) {
-                System.out.println("The name has allready been taken by Project id: " + oVector.elementAt(i).getId());
-                return getPNameString(oVector, sc, hSet);
+                System.out.println("The name has allready been taken by Project id: " + oArrayList.get(i).getId());
+                return getPNameString(oArrayList, sc, hSet);
             }
         } 
         return pname;
@@ -142,7 +143,7 @@ public class Main {
         return todayDate;
     }
 
-    public static void looper(Vector<Project> oVector, HashSet<String> hSet, Scanner sc, Date today){
+    public static void looper(ArrayList<Project> oArrayList, HashSet<String> hSet, Scanner sc, Date today){
         int locId = 0;
         Date locDate = new Date();
         while(true){
@@ -151,22 +152,22 @@ public class Main {
 
             switch ( nlInt(sc) ) {
                 case 1:/**this creates new projects */
-                    oVector.add ( createProject( sc, oVector, hSet ) );
-                    hSet.add( oVector.elementAt( oVector.size()-1 ).getPName());
+                    oArrayList.add ( createProject( sc, oArrayList, hSet ) );
+                    hSet.add( oArrayList.get( oArrayList.size()-1 ).getPName());
                     
                 break;
 
                 case 2: /**this deltes projects found bz id */
-                    if (oVector.size() == 0 ){
+                    if (oArrayList.size() == 0 ){
                         System.out.println("there is no project that can be deleted");
                         break;
                     }
                     System.out.println("---------------------------------------------------------------");
                     System.out.println( "please enter the PID number" );
                     System.out.println("---------------------------------------------------------------");
-                    locId = findElementById( oVector, sc );
-                    hSet.remove(oVector.elementAt(locId).getPName());
-                    oVector.remove( locId );
+                    locId = findElementById( oArrayList, sc );
+                    hSet.remove(oArrayList.get(locId).getPName());
+                    oArrayList.remove( locId );
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("Project has been removed");
                     System.out.println("---------------------------------------------------------------");
@@ -176,13 +177,13 @@ public class Main {
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( "All listed projects" );
                     System.out.println( "---------------------------------------------------------------" );
-                    for ( int i = 0; i < oVector.size(); i++ ){
-                        oVector.elementAt(i).printProject();
+                    for ( int i = 0; i < oArrayList.size(); i++ ){
+                        oArrayList.get(i).printProject();
                         //the reminace of a quick and dirty solution
-                        //pro = (Project) oVector.elementAt(i); //Thanks Kevin Kopp for helping out and telling me to cast because I didn't need to in the vector sample+
+                        //pro = (Project) oArrayList.get(i); //Thanks Kevin Kopp for helping out and telling me to cast because I didn't need to in the ArrayList sample+
                         //pro.printProject();
                     }
-                    if( oVector.size() == 0 ) System.out.println("no projects");
+                    if( oArrayList.size() == 0 ) System.out.println("no projects");
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println("");
                     break;
@@ -192,9 +193,9 @@ public class Main {
                     System.out.println( "All current projects" );
                     System.out.println( "---------------------------------------------------------------" );
                     boolean b = false;
-                    for ( int i = 0; i < oVector.size(); i++ ) {
-                        b = today.isEqualEarlierDate( oVector.elementAt(i).getPEndDate() ) && oVector.elementAt(i).getPStartDate().isEqualEarlierDate( today ) ;
-                        if( b ) oVector.elementAt(i).printProject();
+                    for ( int i = 0; i < oArrayList.size(); i++ ) {
+                        b = today.isEqualEarlierDate( oArrayList.get(i).getPEndDate() ) && oArrayList.get(i).getPStartDate().isEqualEarlierDate( today ) ;
+                        if( b ) oArrayList.get(i).printProject();
                     }
                     break;
             
@@ -202,8 +203,8 @@ public class Main {
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( "All upcoming projects" );
                     System.out.println( "---------------------------------------------------------------" );
-                    for ( int i = 0; i < oVector.size(); i++ ) {
-                        if( today.isEarlierDate( oVector.elementAt(i).getPStartDate() ) ) oVector.elementAt(i).printProject();
+                    for ( int i = 0; i < oArrayList.size(); i++ ) {
+                        if( today.isEarlierDate( oArrayList.get(i).getPStartDate() ) ) oArrayList.get(i).printProject();
                     } 
                     break;
                 
@@ -211,8 +212,8 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("All past projects");
                     System.out.println("---------------------------------------------------------------");
-                    for (int i = 0; i < oVector.size(); i++) {
-                        if ( oVector.elementAt(i).getPEndDate().isEqualEarlierDate( today ) ) oVector.elementAt(i).printProject();
+                    for (int i = 0; i < oArrayList.size(); i++) {
+                        if ( oArrayList.get(i).getPEndDate().isEqualEarlierDate( today ) ) oArrayList.get(i).printProject();
                     }
                     break;
                 
@@ -220,20 +221,20 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");                    
                     System.out.println("edit project name by id");
                     System.out.println("---------------------------------------------------------------");
-                    locId = findElementById(oVector, sc);
-                    hSet.remove( oVector.elementAt(locId).getPName() );
-                    oVector.elementAt(locId).setPName(getPNameString(oVector, sc, hSet));
+                    locId = findElementById(oArrayList, sc);
+                    hSet.remove( oArrayList.get(locId).getPName() );
+                    oArrayList.get(locId).setPName(getPNameString(oArrayList, sc, hSet));
                     break;
                 
                 case 8 : /**this is a start date change */ 
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("which start date would you like to change( refered to by id number )");
                     System.out.println("---------------------------------------------------------------");
-                    locId = findElementById(oVector, sc);
+                    locId = findElementById(oArrayList, sc);
                     System.out.println("---------------------------------------------------------------");
                     locDate = scanDate(sc, "start");
-                    if (locDate.isEqualEarlierDate(oVector.elementAt(locId).getPEndDate())){ 
-                        oVector.elementAt(locId).setPStartDate(locDate);
+                    if (locDate.isEqualEarlierDate(oArrayList.get(locId).getPEndDate())){ 
+                        oArrayList.get(locId).setPStartDate(locDate);
                         System.out.println("success");
                         System.out.println("---------------------------------------------------------------\n");
                     }
@@ -244,10 +245,10 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("which end date would you like to change( refered to by id number )");
                     System.out.println("---------------------------------------------------------------");
-                    locId = findElementById(oVector, sc);
+                    locId = findElementById(oArrayList, sc);
                     locDate = scanDate(sc, "end");
-                    if ( ! locDate.isEarlierDate(oVector.elementAt(locId).getPStartDate())){ 
-                        oVector.elementAt(locId).setPEndDate(locDate);
+                    if ( ! locDate.isEarlierDate(oArrayList.get(locId).getPStartDate())){ 
+                        oArrayList.get(locId).setPEndDate(locDate);
                         System.out.println("success");
                         System.out.println("---------------------------------------------------------------\n");                        
                     } 
@@ -274,10 +275,10 @@ public class Main {
 
     }
 
-    public static int findElementById( Vector<Project> oVector, Scanner sc){
+    public static int findElementById( ArrayList<Project> oArrayList, Scanner sc){
         int pid = nlInt(sc);
-        for (int i = 0; i < oVector.size() ; i++){
-            if ( oVector.elementAt(i).getId() == pid  ){
+        for (int i = 0; i < oArrayList.size() ; i++){
+            if ( oArrayList.get(i).getId() == pid  ){
                 pid = i;
                 break;
             }
