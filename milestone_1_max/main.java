@@ -240,6 +240,7 @@ public class main {
                     locId = findElementById(oVector, sc);
                     System.out.println("---------------------------------------------------------------");
                     locDate = scanDate(sc, "start");
+                    //taiwan number one
                     if (locDate.isEqualEarlierDate(oVector.elementAt(locId).getPEndDate())){ 
                         oVector.elementAt(locId).setPStartDate(locDate);
                         System.out.println("success");
