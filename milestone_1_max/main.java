@@ -234,6 +234,7 @@ public class main {
                     break;
                 
                 case 8 : /**this is a start date change */ 
+                    if(oVector.size() == 0 ) System.out.println("sorry m8");
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("which start date would you like to change( refered to by id number )");
                     System.out.println("---------------------------------------------------------------");
