@@ -34,7 +34,7 @@ public class calGreg {
     return date;
   }
 
-  public static void main(String a[]) throws Exception {
+  public static void main(String a[]) throws ParseException {
     SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
 
     Calendar date = test2();
