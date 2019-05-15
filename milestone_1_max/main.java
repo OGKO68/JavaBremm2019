@@ -1,4 +1,6 @@
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -96,7 +98,12 @@ public class main {
         try {
             
             String[] inDate = sc.nextLine().split("/");
-            
+            Calendar calendar = new GregorianCalendar();
+            calendar.setLenient(false);
+            calendar.set(Calendar.YEAR, Integer.parseInt(inDate[0]) );
+            calendar.set(Calendar.MONTH, Integer.parseInt(inDate[1]) - 1 ); // 11 = december
+            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(inDate[2]) );
+
             scDate = new Date(Integer.parseInt(inDate[0]), Integer.parseInt(inDate[1]), Integer.parseInt(inDate[2]) );
 
             // litte date validation, not in depth but the biggest mistakes will be stoped
