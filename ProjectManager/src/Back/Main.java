@@ -33,15 +33,15 @@ public class Main {
         System.out.println("---------------------------------------------------------------");
         System.out.println("now choose between");
         System.out.println("---------------------------------------------------------------");
-        System.out.println("1 | create new project ");
-        System.out.println("2 | delete project by id");
-        System.out.println("3 | list all projects");
-        System.out.println("4 | list current projects");
-        System.out.println("5 | list upcoming projects");
-        System.out.println("6 | list past projects");
-        System.out.println("7 | change project name by id");
-        System.out.println("8 | change project start by id");
-        System.out.println("9 | change project end by id");
+        System.out.println("1  | create new project ");
+        System.out.println("2  | delete project by id");
+        System.out.println("3  | list all projects");
+        System.out.println("4  | list current projects");
+        System.out.println("5  | list upcoming projects");
+        System.out.println("6  | list past projects");
+        System.out.println("7  | change project name by id");
+        System.out.println("8  | change project start by id");
+        System.out.println("9  | change project end by id");
         System.out.println("10 | end the programm");
         System.out.println("---------------------------------------------------------------");
         System.out.println(" please only enter a number without spaces like \'8\'");
@@ -64,7 +64,7 @@ public class Main {
         String end = "end";
         pStartDate = scanDate(sc, start);
         pEndDate = scanDate(sc, end);
-        while( ! pStartDate.isEarlierDate( pEndDate ) ){
+        while( ! pStartDate.isEqualEarlierDate( pEndDate ) ){
         	System.out.println("---------------------------------------------------------------");
             System.out.println("there might have been an error let's check that again");
             System.out.println("---------------------------------------------------------------");
@@ -162,7 +162,7 @@ public class Main {
                     
                 break;
 
-                case 2: /**this deltes projects found bz id */
+                case 2: /**this deltes projects found by id */
                     if (oArrayList.size() == 0 ){
                         System.out.println("there is no project that can be deleted");
                         break;
@@ -180,7 +180,7 @@ public class Main {
 
                 case 3:/**this lists all listed projects */
                     System.out.println( "---------------------------------------------------------------" );
-                    System.out.println( "All listed projects" );
+                    System.out.println( "All listed projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
                     for ( int i = 0; i < oArrayList.size(); i++ ){
                         oArrayList.get(i).printProject();
@@ -195,7 +195,7 @@ public class Main {
                 
                 case 4:/**this lists all current projects */
                     System.out.println( "---------------------------------------------------------------" );
-                    System.out.println( "All current projects" );
+                    System.out.println( "All current projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
                     boolean b = false;
                     for ( int i = 0; i < oArrayList.size(); i++ ) {
@@ -206,7 +206,7 @@ public class Main {
             
                 case 5:/**this lists all upcoming projects */ 
                     System.out.println( "---------------------------------------------------------------" );
-                    System.out.println( "All upcoming projects" );
+                    System.out.println( "All upcoming projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
                     for ( int i = 0; i < oArrayList.size(); i++ ) {
                         if( today.isEarlierDate( oArrayList.get(i).getPStartDate() ) ) oArrayList.get(i).printProject();
@@ -215,7 +215,7 @@ public class Main {
                 
                 case 6:/**this lists all past projects */
                     System.out.println("---------------------------------------------------------------");
-                    System.out.println("All past projects");
+                    System.out.println("All past projects like id|name|start|end");
                     System.out.println("---------------------------------------------------------------");
                     for (int i = 0; i < oArrayList.size(); i++) {
                         if ( oArrayList.get(i).getPEndDate().isEqualEarlierDate( today ) ) oArrayList.get(i).printProject();
@@ -226,6 +226,10 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");                    
                     System.out.println("edit project name by id");
                     System.out.println("---------------------------------------------------------------");
+                    if (oArrayList.size() < 1 ) {
+                    	System.out.println("There is no Project to edit please create a Project by choosing 1 in the menu");
+                    	break;
+                    }
                     locId = findElementById(oArrayList, sc);
                     hSet.remove( oArrayList.get(locId).getPName() );
                     oArrayList.get(locId).setPName(getPNameString(oArrayList, sc, hSet));
@@ -235,6 +239,10 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("which start date would you like to change( refered to by id number )");
                     System.out.println("---------------------------------------------------------------");
+                    if (oArrayList.size() < 1 ) {
+                    	System.out.println("There is no Project to edit please create a Project by choosing 1 in the menu");
+                    	break;
+                    }
                     locId = findElementById(oArrayList, sc);
                     System.out.println("---------------------------------------------------------------");
                     locDate = scanDate(sc, "start");
@@ -250,6 +258,10 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("which end date would you like to change( refered to by id number )");
                     System.out.println("---------------------------------------------------------------");
+                    if (oArrayList.size() < 1 ) {
+                    	System.out.println("There is no Project to edit please create a Project by choosing 1 in the menu");
+                    	break;
+                    }
                     locId = findElementById(oArrayList, sc);
                     locDate = scanDate(sc, "end");
                     if ( ! locDate.isEarlierDate(oArrayList.get(locId).getPStartDate())){ 
