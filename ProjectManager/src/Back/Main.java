@@ -6,6 +6,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class Main {
@@ -56,30 +60,20 @@ public class Main {
         String pname = getPNameString(oArrayList, sc, hSet);
         Date pEndDate = new Date();
         Date pStartDate = new Date();
-        //please refactor later this is not optimal, there should be a recoursive solution
-        //try {
-            String start = "start";
-            String end = "end";
-            pStartDate = scanDate(sc, start);
-            pEndDate = scanDate(sc, end);
-            while( ! pStartDate.isEarlierDate(pEndDate)){
-                System.out.println("---------------------------------------------------------------");
-                System.out.println("there might have been an error let's check that again");
-                System.out.println("---------------------------------------------------------------");
-                pStartDate = scanDate(sc, start);
-                pEndDate = scanDate(sc, end);
-            }
-        /*} catch (ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
-            System.out.println("----------------------");
-            System.err.println("|inproper date format|");
-            System.out.println("----------------------");
-            System.out.println("| restarting creator |");
-            System.out.println("----------------------");
-            return createProject(sc, oArrayList, hSet);
-        }*/
+        String start = "start";
+        String end = "end";
+        pStartDate = scanDate(sc, start);
+        pEndDate = scanDate(sc, end);
+        while( ! pStartDate.isEarlierDate( pEndDate ) ){
+        	System.out.println("---------------------------------------------------------------");
+            System.out.println("there might have been an error let's check that again");
+            System.out.println("---------------------------------------------------------------");
+            pStartDate = scanDate( sc, start );
+            pEndDate = scanDate( sc, end );
+        }
         int pid = 0;
         if (oArrayList.size() == 0 ) pid = 0;
-        else pid = oArrayList.get(oArrayList.size()-1).getId() + 1;
+        else pid = oArrayList.get( oArrayList.size() - 1 ).getId() + 1;
         Project createProject = new Project(pid, pname, pStartDate, pEndDate);
         System.out.println("---------------------------------------------------------------");
         System.out.println("you created project is");
@@ -91,24 +85,35 @@ public class Main {
 
     public static Date scanDate( Scanner sc, String dateType ) throws ArrayIndexOutOfBoundsException {
         System.out.println("so whats the " + dateType + " date");
-        System.out.println("please enter date like (YYYY/MM/DD)");
+        System.out.println("please enter date like dd-MM-yyyy");
         Date scDate = new Date();
         try {
+            String todayString = sc.nextLine();
+            String[] todayStringArr = todayString.split("-");
             
-            String[] inDate = sc.nextLine().split("/");
+            Calendar cals = parseTimestamp(todayString);
             
-            scDate = new Date(Integer.parseInt(inDate[0]), Integer.parseInt(inDate[1]), Integer.parseInt(inDate[2]) );
-
-            // litte date validation, not in depth but the biggest mistakes will be stoped
-            if( Integer.parseInt(inDate[1]) > 12 || Integer.parseInt(inDate[2]) > 31 || Integer.parseInt(inDate[1]) > 0 || Integer.parseInt(inDate[2]) > 0 ) return scanDate(sc, dateType);
+            scDate = new Date(Integer.parseInt(todayStringArr[2]), Integer.parseInt(todayStringArr[1]),Integer.parseInt(todayStringArr[0])) ;
+            //pDate.printDate();          
        
-        } catch( ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException e) {
+        } catch( ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException | ParseException e) {
+        	
             return scanDate(sc, dateType);
+            
         }
 
         return scDate;
     }
-
+    
+    public synchronized static Calendar parseTimestamp(String timestamp) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMAN);
+        sdf.setLenient(false);
+        java.util.Date d = sdf.parse(timestamp);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        return cal;
+    }
+    
     public static String getPNameString(ArrayList<Project> oArrayList, Scanner sc, HashSet<String> hSet){
         System.out.println("please enter a project name");
         String pname = sc.nextLine();
