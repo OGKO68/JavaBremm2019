@@ -30,10 +30,6 @@ public class Main {
     }
 
     public static void menutext(){
-        try{
-        sleep(5000);
-        }catch(InterruptedException e){}
-        
         System.out.println("---------------------------------------------------------------");
         System.out.println("now choose between");
         System.out.println("---------------------------------------------------------------");
@@ -154,9 +150,11 @@ public class Main {
 
     public static void looper(ArrayList<Project> oArrayList, HashSet<String> hSet, Scanner sc, Date today){
         int locId = 0;
+        int count = 0;
         Date locDate = new Date();
         while(true){
 
+            System.out.println("\n");
             menutext();
 
             switch ( nlInt(sc) ) {
@@ -202,11 +200,13 @@ public class Main {
                     System.out.println( "All current projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
                     boolean b = false;
-                    for ( int i = 0; i < oArrayList.size(); i++ ) {
+                    int i=0;
+                    for (i = 0; i < oArrayList.size(); i++ ) {
                         b = today.isEqualEarlierDate( oArrayList.get(i).getPEndDate() ) && oArrayList.get(i).getPStartDate().isEqualEarlierDate( today ) ;
-                        if( b ) oArrayList.get(i).printProject();
-                        else if(i==0) System.out.println("no projects");
+                        if( b ) {oArrayList.get(i).printProject(); count++;}
                     }
+                    count = 0;
+                    if(count==0) System.out.println("no projects");
                     break;
             
                 case 5:/**this lists all upcoming projects */ 
@@ -214,9 +214,10 @@ public class Main {
                     System.out.println( "All upcoming projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
                     for ( int i = 0; i < oArrayList.size(); i++ ) {
-                        if( today.isEarlierDate( oArrayList.get(i).getPStartDate() ) ) oArrayList.get(i).printProject();
-                        else if(i==0) System.out.println("no projects");
+                        if( today.isEarlierDate( oArrayList.get(i).getPStartDate() ) ) {oArrayList.get(i).printProject(); count++;}
                     } 
+                    count = 0;
+                    if(count==0) System.out.println("no projects");
                     break;
                 
                 case 6:/**this lists all past projects */
@@ -224,9 +225,10 @@ public class Main {
                     System.out.println("All past projects like id|name|start|end");
                     System.out.println("---------------------------------------------------------------");
                     for (int i = 0; i < oArrayList.size(); i++) {
-                        if ( oArrayList.get(i).getPEndDate().isEqualEarlierDate( today ) ) oArrayList.get(i).printProject();
-                        else if(i==0) System.out.println("no projects");
+                        if ( oArrayList.get(i).getPEndDate().isEqualEarlierDate( today ) ) {oArrayList.get(i).printProject(); count++;}
                     }
+                    count = 0;
+                    if(count==0) System.out.println("no projects");
                     break;
                 
                 case 7:/**this is a name change */
