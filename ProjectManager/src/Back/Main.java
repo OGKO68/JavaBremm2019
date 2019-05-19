@@ -1,5 +1,6 @@
 
 package Back;
+import static java.lang.Thread.sleep;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -26,10 +27,13 @@ public class Main {
         /**This is the menu routine */
         looper(oArrayList, hSet, sc, today);
         //anything beyond this point will not be exceuted
-        return ;
     }
 
     public static void menutext(){
+        try{
+        sleep(5000);
+        }catch(InterruptedException e){}
+        
         System.out.println("---------------------------------------------------------------");
         System.out.println("now choose between");
         System.out.println("---------------------------------------------------------------");
@@ -50,8 +54,8 @@ public class Main {
     }
 
     public static ArrayList<Project> gettigStarted(Scanner sc, HashSet<String> hSet) {
-        ArrayList<Project> oArrayList = new ArrayList<Project>();
-        System.out.println("Let's start you with a new Project here");
+        ArrayList<Project> oArrayList = new ArrayList<>();
+        System.out.println("Let's start a new Project here");
         oArrayList.add(createProject(sc, oArrayList, hSet));
         return oArrayList;
     }
@@ -72,7 +76,7 @@ public class Main {
             pEndDate = scanDate( sc, end );
         }
         int pid = 0;
-        if (oArrayList.size() == 0 ) pid = 0;
+        if (oArrayList.isEmpty() ) pid = 0;
         else pid = oArrayList.get( oArrayList.size() - 1 ).getId() + 1;
         Project createProject = new Project(pid, pname, pStartDate, pEndDate);
         System.out.println("---------------------------------------------------------------");
@@ -163,7 +167,7 @@ public class Main {
                 break;
 
                 case 2: /**this deltes projects found by id */
-                    if (oArrayList.size() == 0 ){
+                    if (oArrayList.isEmpty() ){
                         System.out.println("there is no project that can be deleted");
                         break;
                     }
@@ -188,7 +192,7 @@ public class Main {
                         //pro = (Project) oArrayList.get(i); //Thanks Kevin Kopp for helping out and telling me to cast because I didn't need to in the ArrayList sample+
                         //pro.printProject();
                     }
-                    if( oArrayList.size() == 0 ) System.out.println("no projects");
+                    if( oArrayList.isEmpty() ) System.out.println("no projects");
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println("");
                     break;
@@ -201,6 +205,7 @@ public class Main {
                     for ( int i = 0; i < oArrayList.size(); i++ ) {
                         b = today.isEqualEarlierDate( oArrayList.get(i).getPEndDate() ) && oArrayList.get(i).getPStartDate().isEqualEarlierDate( today ) ;
                         if( b ) oArrayList.get(i).printProject();
+                        else if(i==0) System.out.println("no projects");
                     }
                     break;
             
@@ -210,6 +215,7 @@ public class Main {
                     System.out.println( "---------------------------------------------------------------" );
                     for ( int i = 0; i < oArrayList.size(); i++ ) {
                         if( today.isEarlierDate( oArrayList.get(i).getPStartDate() ) ) oArrayList.get(i).printProject();
+                        else if(i==0) System.out.println("no projects");
                     } 
                     break;
                 
@@ -219,6 +225,7 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");
                     for (int i = 0; i < oArrayList.size(); i++) {
                         if ( oArrayList.get(i).getPEndDate().isEqualEarlierDate( today ) ) oArrayList.get(i).printProject();
+                        else if(i==0) System.out.println("no projects");
                     }
                     break;
                 
