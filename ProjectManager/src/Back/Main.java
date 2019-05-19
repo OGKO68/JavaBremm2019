@@ -1,6 +1,5 @@
 
 package Back;
-import static java.lang.Thread.sleep;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -50,7 +49,7 @@ public class Main {
     }
 
     public static ArrayList<Project> gettigStarted(Scanner sc, HashSet<String> hSet) {
-        ArrayList<Project> oArrayList = new ArrayList<>();
+        ArrayList<Project> oArrayList = new ArrayList<Project>();
         System.out.println("Let's start a new Project here");
         oArrayList.add(createProject(sc, oArrayList, hSet));
         return oArrayList;
@@ -90,7 +89,7 @@ public class Main {
         try {
             String todayString = sc.nextLine();
             String[] todayStringArr = todayString.split("-");
-            
+            if (todayStringArr.length > 3) return scanDate(sc, dateType);
             Calendar cals = parseTimestamp(todayString);
             
             scDate = new Date(Integer.parseInt(todayStringArr[2]), Integer.parseInt(todayStringArr[1]),Integer.parseInt(todayStringArr[0])) ;
@@ -148,13 +147,23 @@ public class Main {
         return todayDate;
     }
 
-    public static void looper(ArrayList<Project> oArrayList, HashSet<String> hSet, Scanner sc, Date today){
-        int locId = 0;
+    public synchronized static void looper(ArrayList<Project> oArrayList, HashSet<String> hSet, Scanner sc, Date today){
+        
+    	int locId = 0;
         int count = 0;
         Date locDate = new Date();
+        
+        
         while(true){
-
-            System.out.println("\n");
+        	
+        	try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+            System.out.println("");
             menutext();
 
             switch ( nlInt(sc) ) {
@@ -186,9 +195,6 @@ public class Main {
                     System.out.println( "---------------------------------------------------------------" );
                     for ( int i = 0; i < oArrayList.size(); i++ ){
                         oArrayList.get(i).printProject();
-                        //the reminace of a quick and dirty solution
-                        //pro = (Project) oArrayList.get(i); //Thanks Kevin Kopp for helping out and telling me to cast because I didn't need to in the ArrayList sample+
-                        //pro.printProject();
                     }
                     if( oArrayList.isEmpty() ) System.out.println("no projects");
                     System.out.println( "---------------------------------------------------------------" );
@@ -199,12 +205,13 @@ public class Main {
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( "All current projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
-                    boolean b = false;
-                    for (int i = 0; i < oArrayList.size(); i++ ) {
-                        b = today.isEqualEarlierDate( oArrayList.get(i).getPEndDate() ) && oArrayList.get(i).getPStartDate().isEqualEarlierDate( today ) ;
-                        if( b ) {oArrayList.get(i).printProject(); count++;}
-                    }
                     count = 0;
+                    for (int i = 0; i < oArrayList.size(); i++ ) {
+                        if( today.isEqualEarlierDate( oArrayList.get(i).getPEndDate() ) && oArrayList.get(i).getPStartDate().isEqualEarlierDate( today ) ) {
+                        	oArrayList.get(i).printProject(); 
+                        	count++;
+                        }
+                    }
                     if(count==0) System.out.println("no projects");
                     break;
             
@@ -212,10 +219,13 @@ public class Main {
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( "All upcoming projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
-                    for ( int i = 0; i < oArrayList.size(); i++ ) {
-                        if( today.isEarlierDate( oArrayList.get(i).getPStartDate() ) ) {oArrayList.get(i).printProject(); count++;}
-                    } 
                     count = 0;
+                    for ( int i = 0; i < oArrayList.size(); i++ ) {
+                        if( today.isEarlierDate( oArrayList.get(i).getPStartDate() ) ) {
+                        	oArrayList.get(i).printProject(); 
+                        	count++;
+                        }
+                    }
                     if(count==0) System.out.println("no projects");
                     break;
                 
@@ -223,10 +233,13 @@ public class Main {
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("All past projects like id|name|start|end");
                     System.out.println("---------------------------------------------------------------");
-                    for (int i = 0; i < oArrayList.size(); i++) {
-                        if ( oArrayList.get(i).getPEndDate().isEqualEarlierDate( today ) ) {oArrayList.get(i).printProject(); count++;}
-                    }
                     count = 0;
+                    for (int i = 0; i < oArrayList.size(); i++) {
+                        if (oArrayList.get(i).getPEndDate().isEqualEarlierDate( today ) ) {
+                        	oArrayList.get(i).printProject();
+                        	count++;
+                        }
+                    }
                     if(count==0) System.out.println("no projects");
                     break;
                 
