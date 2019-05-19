@@ -200,8 +200,7 @@ public class Main {
                     System.out.println( "All current projects like id|name|start|end" );
                     System.out.println( "---------------------------------------------------------------" );
                     boolean b = false;
-                    int i=0;
-                    for (i = 0; i < oArrayList.size(); i++ ) {
+                    for (int i = 0; i < oArrayList.size(); i++ ) {
                         b = today.isEqualEarlierDate( oArrayList.get(i).getPEndDate() ) && oArrayList.get(i).getPStartDate().isEqualEarlierDate( today ) ;
                         if( b ) {oArrayList.get(i).printProject(); count++;}
                     }
