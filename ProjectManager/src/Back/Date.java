@@ -18,11 +18,11 @@ public class Date {
     }
 
     public void printDate(){
-        System.out.println(year + "/" + month + "/" + day );
+        System.out.println( day + "-" + month + "-" + year );
     }
    
     public String getDate(){
-        return(year + "/" + month + "/" + day);
+        return(day + "-" + month + "-" + year);
     }
    
     public boolean compareDate(Date d){ // if : else also no variable because ma memory

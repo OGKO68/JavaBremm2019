@@ -67,8 +67,8 @@ public class Main {
         	System.out.println("---------------------------------------------------------------");
             System.out.println("there might have been an error let's check that again");
             System.out.println("---------------------------------------------------------------");
-            pStartDate = scanDate( sc, start );
-            pEndDate = scanDate( sc, end );
+            pStartDate = scanDate( sc, start.toUpperCase() );
+            pEndDate = scanDate( sc, end.toUpperCase() );
         }
         int pid = 0;
         if (oArrayList.isEmpty() ) pid = 0;
@@ -89,16 +89,17 @@ public class Main {
         try {
             String todayString = sc.nextLine();
             String[] todayStringArr = todayString.split("-");
-            if (todayStringArr.length > 3) return scanDate(sc, dateType);
+            if (todayStringArr.length > 3) return scanDate(sc,dateType);
             Calendar cals = parseTimestamp(todayString);
-            
             scDate = new Date(Integer.parseInt(todayStringArr[2]), Integer.parseInt(todayStringArr[1]),Integer.parseInt(todayStringArr[0])) ;
             //pDate.printDate();          
        
         } catch( ArrayIndexOutOfBoundsException | InputMismatchException | NumberFormatException | ParseException e) {
-        	
+        	System.out.println("---------------------------------------------------------------");
+        	System.out.println("|         There might have been a little mistake              |");
+        	System.out.println("---------------------------------------------------------------");
+        	dateType = dateType.toUpperCase();
             return scanDate(sc, dateType);
-            
         }
 
         return scDate;
@@ -130,7 +131,7 @@ public class Main {
         return pname;
     }
 
-    public static Date getToday() {
+    public synchronized static Date getToday() {
     	//comment
         System.out.println("---------------------------------------------------------------");
         System.out.println("|This Program uses LocalDate so the date might be one day off.|");
@@ -159,7 +160,6 @@ public class Main {
         	try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	
@@ -192,18 +192,19 @@ public class Main {
                 case 3:/**this lists all listed projects */
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( "All listed projects like id|name|start|end" );
+                    System.out.println( "Remember dd-MM-yyyy");
                     System.out.println( "---------------------------------------------------------------" );
                     for ( int i = 0; i < oArrayList.size(); i++ ){
                         oArrayList.get(i).printProject();
                     }
                     if( oArrayList.isEmpty() ) System.out.println("no projects");
                     System.out.println( "---------------------------------------------------------------" );
-                    System.out.println("");
                     break;
                 
                 case 4:/**this lists all current projects */
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( "All current projects like id|name|start|end" );
+                    System.out.println( "Remember dd-MM-yyyy");
                     System.out.println( "---------------------------------------------------------------" );
                     count = 0;
                     for (int i = 0; i < oArrayList.size(); i++ ) {
@@ -218,6 +219,7 @@ public class Main {
                 case 5:/**this lists all upcoming projects */ 
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( "All upcoming projects like id|name|start|end" );
+                    System.out.println( "Remember dd-MM-yyyy");
                     System.out.println( "---------------------------------------------------------------" );
                     count = 0;
                     for ( int i = 0; i < oArrayList.size(); i++ ) {
@@ -232,6 +234,7 @@ public class Main {
                 case 6:/**this lists all past projects */
                     System.out.println("---------------------------------------------------------------");
                     System.out.println("All past projects like id|name|start|end");
+                    System.out.println("Remember dd-MM-yyyy");
                     System.out.println("---------------------------------------------------------------");
                     count = 0;
                     for (int i = 0; i < oArrayList.size(); i++) {
@@ -290,7 +293,7 @@ public class Main {
                         System.out.println("success");
                         System.out.println("---------------------------------------------------------------\n");                        
                     } 
-                    else System.out.println("there was a an issue \n --------------------------------------------------------------- ");
+                    else System.out.println("unexpected error \n --------------------------------------------------------------- ");
                     break;
 
                 case 10: /**this is the exit */

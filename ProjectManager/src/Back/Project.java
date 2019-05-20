@@ -6,10 +6,8 @@ public class Project {
     private Date pStartDate;
     private Date pEndDate;
     
-    public Project(){
-        //nothing eh?
-        //I hope it works
-    }
+    public Project(){}
+    
     public Project(int id, String pName, Date pStartDate, Date pEndDate){
         this.id = id;
         this.pName = pName;
