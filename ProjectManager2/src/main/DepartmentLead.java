@@ -1,12 +1,23 @@
 package main;
 
+import java.util.ArrayList;
+
 /**
- * As a department lead:
- * Who are my employees?
- * What are the projects my employees are involved in?
- * What is their accumulated cost per month?
+ * Mandatory:
+ * - Assignment & return of the employees
+ * Recommended:
+ * - Return of the projects where the respective
+ *   employees are working on
+ * - Return of sum of salary of members of the department
  */
 
-public class DepartmentLead {
+public class DepartmentLead extends Employee {
+    /** List of assigned Employees, all unasigned Emplyees will be deleted */
+    public ArrayList<Employee> assignedEmployees;
+    /** Calculates the Salarie of all underlying Employees */
+    public int employeesSalaries(){}
 	
 }
+/*
+- Frage was passiert mit dem 
+*/
