@@ -12,8 +12,17 @@ import java.util.ArrayList;
  */
 
 public class Employee {
+    
+    /** this is the Name of the Employee */
     private String employeeName;
+
+    /** this is the Salary of the Employee */
     private int employeeSalary;
+
+    /** this is the List of projects an employee partakes in */
     private ArrayList<String> employeeProjectList;
-    private String empoloyeeDepartmentLead;
+
+    /** this is a String that saves the name of the DepartmentLead */
+    private String employeeDepartmentLead;
+
 }

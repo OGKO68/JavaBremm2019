@@ -13,12 +13,16 @@ import java.util.ArrayList;
  */
 
 public class Project {
+
     /** name of the Project */
     private String projectName;
+
     /** ArrayList of Workers that Participate in the Project */
     private ArrayList<String> participatingWorkers;
+
     /** Singular DepartmentLead leading the project, also represents the department here*/
     private String departmentLead; 
+    
     /** Function that returns the Salary of all employees */
     public int getSalarySum(){
         /** TODO implementation */

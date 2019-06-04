@@ -31,8 +31,10 @@ public class DepartmentLead extends Employee {
 	
 }
 
-/*
+/* QUESTIONS
 - What happens with lead changes will
 - Where to place an arrayList with all Employees
 - Can we use HashSets for easier checking 
+- Do I really need a create an object to inact method not written in the same file
+- if there is no main how to save the Employees Arraylist and the Department lead ArrayList
 */

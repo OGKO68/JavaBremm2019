@@ -6,5 +6,8 @@ public class main {
 		testsProjects();
 
 	}
+	
+	public static void testsProjects(){
 
+	}
 }
