@@ -12,12 +12,27 @@ import java.util.ArrayList;
  */
 
 public class DepartmentLead extends Employee {
+
     /** List of assigned Employees, all unasigned Emplyees will be deleted */
     public ArrayList<Employee> assignedEmployees;
-    /** Calculates the Salarie of all underlying Employees */
-    public int employeesSalaries(){}
+
+    /** returns List of all Projects subordinates work on */
+    public ArrayList<String> allEmployeeProjects(){
+        /** @TODO implementation */
+        ArrayList<String> returnArrayList =  new ArrayList<String>();
+        return returnArrayList;
+    }
+
+    /** Calculates the Salarie of all subordinates Employees */
+    public int employeesSalaries(){
+        /** TODO implementation */
+        return 1;
+    }
 	
 }
+
 /*
-- Frage was passiert mit dem 
+- What happens with lead changes will
+- Where to place an arrayList with all Employees
+- Can we use HashSets for easier checking 
 */
