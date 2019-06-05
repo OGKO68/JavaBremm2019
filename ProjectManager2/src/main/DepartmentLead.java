@@ -18,14 +18,13 @@ public class DepartmentLead extends Employee {
 
     /** returns List of all Projects subordinates work on */
     public ArrayList<String> allEmployeeProjects(){
-        /** @TODO implementation */
+        // TODO implementation
         ArrayList<String> returnArrayList =  new ArrayList<String>();
         return returnArrayList;
     }
 
     /** Calculates the Salarie of all subordinates Employees */
     public int employeesSalaries(){
-        /** TODO implementation */
         return 1;
     }
 	
@@ -42,4 +41,9 @@ public class DepartmentLead extends Employee {
 	-> Static method, ClassName.staticfunction no object to create
 - if there is no main how to save the Employees Arraylist and the Department lead ArrayList
 	-> 
+	
+Question 2
+only one file?
+
+save arrayList of Employees
 */
