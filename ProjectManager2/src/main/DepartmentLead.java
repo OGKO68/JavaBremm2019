@@ -33,8 +33,13 @@ public class DepartmentLead extends Employee {
 
 /* QUESTIONS
 - What happens with lead changes will
+	-> no promotion no demotion. no rank up
 - Where to place an arrayList with all Employees
-- Can we use HashSets for easier checking 
+	-> araylist hashmap in api class
+- Can we use HashSets for easier checking
+	-> ok 
 - Do I really need a create an object to inact method not written in the same file
+	-> Static method, ClassName.staticfunction no object to create
 - if there is no main how to save the Employees Arraylist and the Department lead ArrayList
+	-> 
 */
