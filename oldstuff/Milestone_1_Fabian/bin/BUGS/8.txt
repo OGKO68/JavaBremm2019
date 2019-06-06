@@ -1,0 +1,82 @@
+//this is an issue on Keyboard locale DE_iso
+
+---------------------------------------------------------------
+|This Program uses LocalDate so the date might be one day off.|
+---------------------------------------------------------------
+Today is
+2019/5/6
+Let's start you with a new Project here
+please enter a project name
+ut
+so whats the start date
+please enter date like (YYYY/MM/DD)
+1999/9/9
+so whats the end date
+please enter date like (YYYY/MM/DD)
+1998/1/9
+---------------------------------------------------------------
+there might have been an error let's check that again
+---------------------------------------------------------------
+so whats the start date
+please enter date like (YYYY/MM/DD)
+1999/8/8
+so whats the end date
+please enter date like (YYYY/MM/DD)
+1999/9/9
+---------------------------------------------------------------
+you created project is
+ut | 1999/8/8 | 1999/9/9 | 0
+---------------------------------------------------------------
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
+1
+please enter a project name
+ut2020
+so whats the start date
+please enter date like (YYYY/MM/DD)
+1999/9/9
+so whats the end date
+please enter date like (YYYY/MM/DD)
+2020/7/8
+---------------------------------------------------------------
+there might have been an error let's check that again
+---------------------------------------------------------------
+so whats the start date
+please enter date like (YYYY/MM/DD)
+1999/9/9
+so whats the end date
+please enter date like (YYYY/MM/DD)
+1999/10/9
+---------------------------------------------------------------
+there might have been an error let's check that again
+---------------------------------------------------------------
+so whats the start date
+please enter date like (YYYY/MM/DD)
+9/9/9
+so whats the end date
+please enter date like (YYYY/MM/DD)
+9/9/9
+---------------------------------------------------------------
+there might have been an error let's check that again
+---------------------------------------------------------------
+so whats the start date
+please enter date like (YYYY/MM/DD)
+9/9/9
+so whats the end date
+please enter date like (YYYY/MM/DD)
+99/9/9
+---------------------------------------------------------------
+there might have been an error let's check that again
+---------------------------------------------------------------
+so whats the start date
+please enter date like (YYYY/MM/DD)
+^Cubuntu@LAPTOP-UMM2NML8:/mnt/c/Users/berry/Documents/GitHub/JavaBremm2019/milestone_1_max$

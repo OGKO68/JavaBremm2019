@@ -1,0 +1,146 @@
+---------------------------------------------------------------
+|This Program uses LocalDate so the date might be one day off.|
+---------------------------------------------------------------
+Today is
+2019/5/6
+Let's start you with a new Project here
+please enter a project name
+ut1
+so whats the start date
+please enter date like (YYYY/MM/DD)
+197/02/02
+so whats the end date
+please enter date like (YYYY/MM/DD)
+1999/06/20
+---------------------------------------------------------------
+you created project is
+ut1 | 197/2/2 | 1999/6/20 | 0
+---------------------------------------------------------------
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
+1
+please enter a project name
+ut2016
+so whats the start date
+please enter date like (YYYY/MM/DD)
+2016/02/02
+so whats the end date
+please enter date like (YYYY/MM/DD)
+2020/02/02
+---------------------------------------------------------------
+you created project is
+ut2016 | 2016/2/2 | 2020/2/2 | 1
+---------------------------------------------------------------
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
+1
+please enter a project name
+ut2020
+so whats the start date
+please enter date like (YYYY/MM/DD)
+2020/06/06
+so whats the end date
+please enter date like (YYYY/MM/DD)
+2020/07/07
+---------------------------------------------------------------
+you created project is
+ut2020 | 2020/6/6 | 2020/7/7 | 2
+---------------------------------------------------------------
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
+4
+---------------------------------------------------------------
+All current projects
+---------------------------------------------------------------
+ut2016 | 2016/2/2 | 2020/2/2 | 1
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
+5
+---------------------------------------------------------------
+All upcoming projects
+---------------------------------------------------------------
+ut1 | 197/2/2 | 1999/6/20 | 0
+ut2016 | 2016/2/2 | 2020/2/2 | 1
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
+6
+---------------------------------------------------------------
+All past projects
+---------------------------------------------------------------
+ut2016 | 2016/2/2 | 2020/2/2 | 1
+ut2020 | 2020/6/6 | 2020/7/7 | 2
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
+3
+---------------------------------------------------------------
+All listed projects
+---------------------------------------------------------------
+ut1 | 197/2/2 | 1999/6/20 | 0
+ut2016 | 2016/2/2 | 2020/2/2 | 1
+ut2020 | 2020/6/6 | 2020/7/7 | 2
+---------------------------------------------------------------
+---------------------------------------------------------------
+now choose between
+---------------------------------------------------------------
+1 | create new Project
+2 | delete Prject by id
+3 | list all projects
+4 | list current projects
+5 | list upcoming projects
+6 | list past prjects
+7 | end the programm
+---------------------------------------------------------------
