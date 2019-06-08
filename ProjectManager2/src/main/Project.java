@@ -3,6 +3,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 
 /**
  * Mandatory:
@@ -15,19 +16,21 @@ import java.util.Calendar;
 
 public class Project {
 
-    Project(){
-        projectName = null;
-
+    public Project(){
+        this.projectName = null;
+        this.projectStartDate = null;
+        this.projectEndDate = null;
+        this.participatingWorkers = null;
+        this.departmentLead = null;
     }
-
     /** name of the Project */
     private String projectName;
 
-    /** end date of the Project */
-    private Calendar projectEndDate;
-
     /** start date of the project */
     private Calendar projectStartDate;
+
+    /** end date of the Project */
+    private Calendar projectEndDate;
 
     /** ArrayList of Workers that Participate in the Project */
     private ArrayList<String> participatingWorkers;
@@ -45,15 +48,22 @@ public class Project {
     /**
      * @param projectStartDate the projectStartDate to set new end date for the project
      */
-    public boolean setProjectStartDate(Calendar projectStartDate) {
-        if (this.projectEndDate == null ){
-            this.projectStartDate = projectStartDate;
-            return true;
-        }
-        if( projectStartDate.before(this.projectEndDate) ){
-            this.projectStartDate = projectStartDate;
-            return true;
-        }else {
+    public boolean setProjectStartDate(Calendar projectStartDate) throws Exception {
+        this.projectStartDate.setLenient(false);
+        try{
+            //null means this is a new project so we do not need to check
+            if (this.projectEndDate == null ){
+                this.projectStartDate = projectStartDate;
+                return true;
+            }
+            // if the the endDate is before the start tana there is a problem dealt with in else 
+            if( projectStartDate.before(this.projectEndDate) ){
+                this.projectStartDate = projectStartDate;
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception e){
             return false;
         }
     }
@@ -62,13 +72,19 @@ public class Project {
     /**
      * @param projectEndDate the projectStartDate to set a new end date for the project
      */
-    public boolean setProjectEndDate(Calendar projectEndDate) {
-        if(this.projectStartDate.before(projectEndDate)){
-            this.projectEndDate = projectEndDate;
-            return true;
-        } else {
+    public boolean setProjectEndDate(Calendar projectEndDate) throws Exception{
+        this.projectStartDate.setLenient(false);
+        try{
+            if(this.projectStartDate.before(projectEndDate)){
+                this.projectEndDate = projectEndDate;
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception e){
             return false;
-        }  
+        }
+
     }
     
 
@@ -84,8 +100,11 @@ public class Project {
     /**
      * @param projectName the projectName to set
      */
-    public void setProjectName(String projectName) {
+    public boolean setProjectName(String projectName, HashSet<String> projectNameHashSet){
+        if(projectName == null || projectName == "" || projectName == " ") return false;
+        if( projectNameHashSet.contains( projectName )) return false;
         this.projectName = projectName;
+        return false;
     }
 
     /**
@@ -113,6 +132,7 @@ public class Project {
      * @param participatingWorkers the participatingWorkers to set
      */
     public void setParticipatingWorkers(ArrayList<String> participatingWorkers) {
+        //TODO
         this.participatingWorkers = participatingWorkers;
     }
 
@@ -127,6 +147,7 @@ public class Project {
      * @param departmentLead the departmentLead to set
      */
     public void setDepartmentLead(String departmentLead) {
+        //TODO
         this.departmentLead = departmentLead;
     }
 

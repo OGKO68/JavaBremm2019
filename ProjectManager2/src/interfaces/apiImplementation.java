@@ -2,14 +2,32 @@ package interfaces;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+
 import main.*;
 
 public class apiImplementation implements ApiInterface {
 
+	ArrayList<Project> projectArrayList = new ArrayList<Project>();
+	HashSet<String> projectNameHashSet = new HashSet<String>();
+	
 	@Override
 	public boolean createProject(String projectName, Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
-		return false;
+		projectArrayList.add(new Project());
+		// if the name is emty,space,null,not unq than false 
+		if(! projectArrayList.get(projectArrayList.size() - 1).setProjectName(projectName, projectNameHashSet) ) return false;
+		else projectNameHashSet.add(projectName);
+		try {
+			if(! projectArrayList.get(projectArrayList.size() - 1).setProjectStartDate(startDate) ) return false;
+		} catch (Exception e) {
+			return false;
+		}
+		try {
+			if(! projectArrayList.get(projectArrayList.size() - 1).setProjectEndDate(endDate) ) return false;
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -20,7 +38,12 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public boolean deleteProject(String projectName) {
-		// TODO Auto-generated method stub
+		for(int  i = projectArrayList.size(); i > 0  ; i-- ){
+			if ( projectArrayList.get(i).getProjectName() == projectName ) {
+				projectArrayList.remove(i);
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -155,6 +178,5 @@ public class apiImplementation implements ApiInterface {
 		// TODO Auto-generated method stub
 		return false;
 	} 
-	ArrayList<Project> projectArrayList = new ArrayList<Project>();
 	
 }

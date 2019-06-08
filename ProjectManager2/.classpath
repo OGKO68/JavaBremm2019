@@ -6,6 +6,5 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/Dokumente/GitHub/JavaBremm2019/ProjectManager2/src/jackson-databind-2.9.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
