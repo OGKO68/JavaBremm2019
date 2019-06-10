@@ -117,7 +117,8 @@ public class Project {
      * @param projectName the projectName to set
      */
     public boolean setProjectName(String projectName, HashSet<String> projectNameHashSet){
-    	HashSet<String> localizedProjectNameHashSet = projectNameHashSet;
+    	HashSet<String> localizedProjectNameHashSet = new HashSet<String>(); //projectNameHashSet;
+    	localizedProjectNameHashSet = projectNameHashSet;
     	// if the project name is null, empty or a space it's wrong
         if(projectName == null || projectName == "" || projectName == " ") return false;
         

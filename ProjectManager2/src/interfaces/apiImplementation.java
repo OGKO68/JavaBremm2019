@@ -8,8 +8,13 @@ import main.*;
 
 public class apiImplementation implements ApiInterface {
 
-	ArrayList<Project> projectArrayList;
-	HashSet<String> projectNameHashSet;
+	public ArrayList<Project> projectArrayList;
+	public HashSet<String> projectNameHashSet;
+	
+	public apiImplementation() {
+		this.projectArrayList = new ArrayList<Project>();
+		this.projectNameHashSet = new HashSet<String>();
+	}
 
 
 	public ArrayList<Project> getProjectArrayList(){
@@ -48,12 +53,12 @@ public class apiImplementation implements ApiInterface {
 		} catch (Exception e) {
 			return false;
 		}
-		
+		/**
 		try {
 			if(! localProject.setProjectEndDate(endDate) ) return false;
 		} catch (Exception e) {
 			return false;
-		}
+		}*/
 		localProjectArrayList.add(localProject);
 		
 		this.setProjectArrayList(localProjectArrayList);
