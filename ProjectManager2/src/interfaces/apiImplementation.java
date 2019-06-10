@@ -8,25 +8,57 @@ import main.*;
 
 public class apiImplementation implements ApiInterface {
 
-	ArrayList<Project> projectArrayList = new ArrayList<Project>();
-	HashSet<String> projectNameHashSet = new HashSet<String>();
+	ArrayList<Project> projectArrayList;
+	HashSet<String> projectNameHashSet;
+
+
+	public ArrayList<Project> getProjectArrayList(){
+		return this.projectArrayList;
+	}
+	/**
+	 * @param projectArrayList the projectArrayList to set
+	 */
+	public void setProjectArrayList(ArrayList<Project> projectArrayList) {
+		this.projectArrayList = projectArrayList;
+	}
 	
+	public HashSet<String> getProjectNameHashSet(){
+		return this.projectNameHashSet;
+	}
+	/**
+	 * @param projectNameHashSet the projectNameHashSet to set
+	 */
+	public void setProjectNameHashSet(HashSet<String> projectNameHashSet) {
+		this.projectNameHashSet = projectNameHashSet;
+	}
+
+
 	@Override
 	public boolean createProject(String projectName, Calendar startDate, Calendar endDate) {
-		projectArrayList.add(new Project());
-		// if the name is emty,space,null,not unq than false 
-		if(! projectArrayList.get(projectArrayList.size() - 1).setProjectName(projectName, projectNameHashSet) ) return false;
-		else projectNameHashSet.add(projectName);
+		ArrayList<Project> localProjectArrayList = this.getProjectArrayList();
+		HashSet<String> localProjectNameHashSet = this.getProjectNameHashSet();
+		Project localProject = new Project(); 
+		// if the name is empty,space,null,not unq than false 
+		if(localProject.setProjectName(projectName, localProjectNameHashSet) ) {
+			//localProjectNameHashSet.add(projectName);
+		} else return false;
+		
 		try {
-			if(! projectArrayList.get(projectArrayList.size() - 1).setProjectStartDate(startDate) ) return false;
+			if(! localProject.setProjectStartDate(startDate) ) return false;
 		} catch (Exception e) {
 			return false;
 		}
+		
 		try {
-			if(! projectArrayList.get(projectArrayList.size() - 1).setProjectEndDate(endDate) ) return false;
+			if(! localProject.setProjectEndDate(endDate) ) return false;
 		} catch (Exception e) {
 			return false;
 		}
+		localProjectArrayList.add(localProject);
+		
+		this.setProjectArrayList(localProjectArrayList);
+		this.setProjectNameHashSet(localProjectNameHashSet);
+
 		return true;
 	}
 

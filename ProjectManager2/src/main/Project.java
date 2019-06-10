@@ -49,20 +49,26 @@ public class Project {
      * @param projectStartDate the projectStartDate to set new end date for the project
      */
     public boolean setProjectStartDate(Calendar projectStartDate) throws Exception {
+    	
+    	//seting up a strict calendat object
         this.projectStartDate.setLenient(false);
+        
+        //actually setting the date
         try{
+        	
             //null means this is a new project so we do not need to check
             if (this.projectEndDate == null ){
                 this.projectStartDate = projectStartDate;
                 return true;
             }
+            
             // if the the endDate is before the start tana there is a problem dealt with in else 
             if( projectStartDate.before(this.projectEndDate) ){
                 this.projectStartDate = projectStartDate;
                 return true;
-            } else {
-                return false;
-            }
+            } else { return false; }
+        
+        // if there was an eception the date must be wrong
         } catch(Exception e){
             return false;
         }
@@ -73,14 +79,24 @@ public class Project {
      * @param projectEndDate the projectStartDate to set a new end date for the project
      */
     public boolean setProjectEndDate(Calendar projectEndDate) throws Exception{
-        this.projectStartDate.setLenient(false);
+
+    	//seting up a strict calendat object
+    	this.projectStartDate.setLenient(false);
+        
+    	// if the start date is null we'll set the end date anyway
+    	if (this.projectStartDate == null ){
+            this.projectEndDate = projectEndDate;
+            return true;
+        }
+    	
+    	//if the start date is before the end date that would be correct
         try{
             if(this.projectStartDate.before(projectEndDate)){
                 this.projectEndDate = projectEndDate;
                 return true;
-            } else {
-                return false;
-            }
+            } else { return false; }
+            
+        //if ther was an exception the input mus have been wrong
         } catch(Exception e){
             return false;
         }
@@ -101,10 +117,18 @@ public class Project {
      * @param projectName the projectName to set
      */
     public boolean setProjectName(String projectName, HashSet<String> projectNameHashSet){
+    	HashSet<String> localizedProjectNameHashSet = projectNameHashSet;
+    	// if the project name is null, empty or a space it's wrong
         if(projectName == null || projectName == "" || projectName == " ") return false;
-        if( projectNameHashSet.contains( projectName )) return false;
+        
+        //if the name is an the hashset it should be false
+        if( localizedProjectNameHashSet.contains( projectName ) ){
+        	 return false;
+        }
+        
+        // if everything is good so far than ther project should name should be fine and return 
         this.projectName = projectName;
-        return false;
+        return true;
     }
 
     /**
