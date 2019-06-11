@@ -48,13 +48,13 @@ public class Project {
     /**
      * @param projectStartDate the projectStartDate to set new end date for the project
      */
-    public boolean setProjectStartDate(Calendar projectStartDate) throws Exception {
+    public boolean setProjectStartDate(Calendar projectStartDate) {
     	
     	//seting up a strict calendat object
         this.projectStartDate.setLenient(false);
         
         //actually setting the date
-        try{
+        //try{
         	
             //null means this is a new project so we do not need to check
             if (this.projectEndDate == null ){
@@ -69,9 +69,11 @@ public class Project {
             } else { return false; }
         
         // if there was an eception the date must be wrong
+        /*
         } catch(Exception e){
             return false;
         }
+        */
     }
 
     
@@ -90,16 +92,18 @@ public class Project {
         }
     	
     	//if the start date is before the end date that would be correct
-        try{
+        //try{
             if(this.projectStartDate.before(projectEndDate)){
                 this.projectEndDate = projectEndDate;
                 return true;
             } else { return false; }
             
         //if ther was an exception the input mus have been wrong
-        } catch(Exception e){
+        /*
+    	} catch(Exception e){
             return false;
         }
+        */
 
     }
     

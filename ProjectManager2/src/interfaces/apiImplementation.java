@@ -39,7 +39,7 @@ public class apiImplementation implements ApiInterface {
 
 
 	@Override
-	public boolean createProject(String projectName, Calendar startDate, Calendar endDate) {
+	public boolean createProject(String projectName, Calendar startDate, Calendar endDate){
 		ArrayList<Project> localProjectArrayList = this.getProjectArrayList();
 		HashSet<String> localProjectNameHashSet = this.getProjectNameHashSet();
 		Project localProject = new Project(); 
@@ -48,12 +48,14 @@ public class apiImplementation implements ApiInterface {
 			//localProjectNameHashSet.add(projectName);
 		} else return false;
 		
+		if(! localProject.setProjectStartDate(startDate) ) return false;
+		/*
 		try {
 			if(! localProject.setProjectStartDate(startDate) ) return false;
 		} catch (Exception e) {
 			return false;
 		}
-		/**
+		
 		try {
 			if(! localProject.setProjectEndDate(endDate) ) return false;
 		} catch (Exception e) {
