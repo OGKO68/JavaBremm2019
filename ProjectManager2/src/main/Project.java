@@ -3,6 +3,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 
 /**
@@ -17,11 +18,12 @@ import java.util.HashSet;
 public class Project {
 
     public Project(){
-        this.projectName = null;
-        this.projectStartDate = null;
+        this.projectName = new String();
+        this.projectStartDate = null ; //new GregorianCalendar(1,1,1);
         this.projectEndDate = null;
-        this.participatingWorkers = null;
-        this.departmentLead = null;
+        this.participatingWorkers = new ArrayList<String>();
+        this.participatingWorkersSet = new HashSet<String>();
+        this.departmentLead = new String();
     }
     /** name of the Project */
     private String projectName;
@@ -34,15 +36,18 @@ public class Project {
 
     /** ArrayList of Workers that Participate in the Project */
     private ArrayList<String> participatingWorkers;
+    
+    /**HashSet of Workers that Participate in the Project */
+    private HashSet<String> participatingWorkersSet;
 
     /** Singular DepartmentLead leading the project, also represents the department here*/
     private String departmentLead; 
     
     /** Function that returns the Salary of all employees */
     public int getSalarySum(){
-
-        // TODO implementation
-        return 1;
+    	int salary = 0;
+    	
+    	return salary;
     }
 
     /**
@@ -50,60 +55,75 @@ public class Project {
      */
     public boolean setProjectStartDate(Calendar projectStartDate) {
     	
-    	//seting up a strict calendat object
-        this.projectStartDate.setLenient(false);
+    	//null date handler
+    	if(projectStartDate == null) return false;
         
-        //actually setting the date
-        //try{
+        try {
         	
-            //null means this is a new project so we do not need to check
-            if (this.projectEndDate == null ){
-                this.projectStartDate = projectStartDate;
-                return true;
-            }
-            
-            // if the the endDate is before the start tana there is a problem dealt with in else 
-            if( projectStartDate.before(this.projectEndDate) ){
-                this.projectStartDate = projectStartDate;
-                return true;
-            } else { return false; }
-        
-        // if there was an eception the date must be wrong
-        /*
+        	//is null test to for regular creations
+	        if(projectEndDate == null) {
+	        	this.projectStartDate = new GregorianCalendar();
+	        	this.projectStartDate.setLenient(false);
+	        	this.projectEndDate = new GregorianCalendar();
+	        	this.projectEndDate.setLenient(false);
+	        	
+	        	this.projectStartDate = projectStartDate;
+	        	
+	        	return true;
+	        } else {
+	        	
+	        	//if the the endDate is before the start than date is false
+	        	if( projectStartDate.before(this.projectEndDate) ){
+	                this.projectStartDate = projectStartDate;
+	                return true;
+	            } else { 
+	            	return false; 
+	            }
+	        }
+	        
+        // if there was an eception the date must be wrong no dealing with parsing
         } catch(Exception e){
             return false;
         }
-        */
+        
     }
 
     
     /**
      * @param projectEndDate the projectStartDate to set a new end date for the project
      */
-    public boolean setProjectEndDate(Calendar projectEndDate) throws Exception{
-
-    	//seting up a strict calendat object
-    	this.projectStartDate.setLenient(false);
-        
-    	// if the start date is null we'll set the end date anyway
-    	if (this.projectStartDate == null ){
-            this.projectEndDate = projectEndDate;
-            return true;
-        }
+    public boolean setProjectEndDate(Calendar projectEndDate) {
     	
-    	//if the start date is before the end date that would be correct
-        //try{
-            if(this.projectStartDate.before(projectEndDate)){
-                this.projectEndDate = projectEndDate;
-                return true;
-            } else { return false; }
-            
-        //if ther was an exception the input mus have been wrong
-        /*
-    	} catch(Exception e){
+    	//null date handler
+    	if(projectEndDate == null) return false;
+    	
+    	try {
+        	
+        	//is null test to for regular creations
+	        if(projectStartDate == null) {
+	        	this.projectStartDate = new GregorianCalendar();
+	        	this.projectStartDate.setLenient(false);
+	        	this.projectEndDate = new GregorianCalendar();
+	        	this.projectEndDate.setLenient(false);
+	        	
+	        	this.projectEndDate = projectEndDate;
+	        	
+	        	return true;
+	        } else {
+	        	
+	        	//if the the endDate is before the start than date is false
+	        	if( this.projectStartDate.before(projectEndDate) ){
+	                this.projectEndDate = projectEndDate;
+	                return true;
+	            } else { 
+	            	return false; 
+	            }
+	        }
+	        
+        // if there was an eception the date must be wrong no dealing with parsing
+        } catch(Exception e){
             return false;
         }
-        */
 
     }
     
@@ -121,8 +141,7 @@ public class Project {
      * @param projectName the projectName to set
      */
     public boolean setProjectName(String projectName, HashSet<String> projectNameHashSet){
-    	HashSet<String> localizedProjectNameHashSet = new HashSet<String>(); //projectNameHashSet;
-    	localizedProjectNameHashSet = projectNameHashSet;
+    	HashSet<String> localizedProjectNameHashSet = projectNameHashSet;
     	// if the project name is null, empty or a space it's wrong
         if(projectName == null || projectName == "" || projectName == " ") return false;
         
@@ -163,6 +182,24 @@ public class Project {
     public void setParticipatingWorkers(ArrayList<String> participatingWorkers) {
         //TODO
         this.participatingWorkers = participatingWorkers;
+    }
+    
+    public boolean addParticipatingWorker( String worker) {
+    	
+    	//check 
+    	if(this.participatingWorkersSet.contains(worker)){
+    		return false;
+    	}else {
+    		//
+    		if(worker == null || worker == "" || worker == " " ) {
+    			return false;
+    		}else {
+    			this.participatingWorkers.add(worker);
+    			return true;
+    		}
+    		
+    	}
+    	
     }
 
     /**

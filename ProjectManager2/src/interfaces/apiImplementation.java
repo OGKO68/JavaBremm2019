@@ -30,6 +30,7 @@ public class apiImplementation implements ApiInterface {
 	public HashSet<String> getProjectNameHashSet(){
 		return this.projectNameHashSet;
 	}
+	
 	/**
 	 * @param projectNameHashSet the projectNameHashSet to set
 	 */
@@ -45,22 +46,12 @@ public class apiImplementation implements ApiInterface {
 		Project localProject = new Project(); 
 		// if the name is empty,space,null,not unq than false 
 		if(localProject.setProjectName(projectName, localProjectNameHashSet) ) {
-			//localProjectNameHashSet.add(projectName);
+			localProjectNameHashSet.add(projectName);
 		} else return false;
 		
 		if(! localProject.setProjectStartDate(startDate) ) return false;
-		/*
-		try {
-			if(! localProject.setProjectStartDate(startDate) ) return false;
-		} catch (Exception e) {
-			return false;
-		}
-		
-		try {
-			if(! localProject.setProjectEndDate(endDate) ) return false;
-		} catch (Exception e) {
-			return false;
-		}*/
+		if(! localProject.setProjectEndDate(endDate)) return false;
+	
 		localProjectArrayList.add(localProject);
 		
 		this.setProjectArrayList(localProjectArrayList);
