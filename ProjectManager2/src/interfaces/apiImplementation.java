@@ -42,11 +42,11 @@ public class apiImplementation implements ApiInterface {
 		this.projectNameHashSet = projectNameHashSet;
 	}
 	/*
-	 * THIS IS NOT API IMPLEMENTATION
+	 * END OF THIS IMPLEMENTATION OBJECT METHODS
 	 * */
 
 	//IMPLEMENTATION START
-	@Override
+	@Override //DONE
 	public boolean createProject(String projectName, Calendar startDate, Calendar endDate){
 		
 		//work with local lists to only complete finished transactions
@@ -76,7 +76,7 @@ public class apiImplementation implements ApiInterface {
 		return true;
 	}
 
-	@Override
+	@Override //DONE
 	public boolean changeProject(String projectNameOld, String projectNameNew, Calendar startDate, Calendar endDate) {
 			
 		for(int i = 0; this.projectArrayList.size() > i ; i++) {
@@ -105,7 +105,7 @@ public class apiImplementation implements ApiInterface {
 		return false;
 	}
 
-	@Override
+	@Override //DONE
 	public boolean deleteProject(String projectName) {
 		for(int i = 0; this.projectArrayList.size() > i ; i++) {
 			if(projectArrayList.get(i).getProjectName().equals(projectName)) {
@@ -116,7 +116,7 @@ public class apiImplementation implements ApiInterface {
 		return false;
 	}
 
-	@Override
+	@Override //DONE
 	public ArrayList<String> getProjectNames() {
 		//create the list
 		ArrayList<String> localProjectNameList = new ArrayList<String>();

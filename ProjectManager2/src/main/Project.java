@@ -127,14 +127,24 @@ public class Project {
 
     }
     
-
-
-
-    /**
-     * @return String return the projectName
-     */
-    public String getProjectName() {
-        return projectName;
+    
+    public boolean addParticipatingWorker( String worker) {
+    	
+    	//check 
+    	if(this.participatingWorkersSet.contains(worker)){
+    		return false;
+    	}else {
+    		//if worker name is invalid return 
+    		if(worker == null || worker == "" || worker == " " ) {
+    			return false;
+    		}else {
+                //if valid add
+    			this.participatingWorkers.add(worker);
+    			return true;
+    		}
+    		
+    	}
+    	
     }
 
     /**
@@ -153,6 +163,28 @@ public class Project {
         // if everything is good so far than ther project should name should be fine and return 
         this.projectName = projectName;
         return true;
+    }
+
+    /**
+     * @param participatingWorkers the participatingWorkers to set
+     */
+    public void setParticipatingWorkers(ArrayList<String> participatingWorkers) {
+        this.participatingWorkers = participatingWorkers;
+    }
+
+    /**
+     * @param departmentLead the departmentLead to set
+     */
+    public void setDepartmentLead(String departmentLead) {
+        this.departmentLead = departmentLead;
+    }
+
+
+    /**
+     * @return String return the projectName
+     */
+    public String getProjectName() {
+        return projectName;
     }
 
     /**
@@ -176,45 +208,11 @@ public class Project {
         return participatingWorkers;
     }
 
-    /**
-     * @param participatingWorkers the participatingWorkers to set
-     */
-    public void setParticipatingWorkers(ArrayList<String> participatingWorkers) {
-        //TODO
-        this.participatingWorkers = participatingWorkers;
-    }
-    
-    public boolean addParticipatingWorker( String worker) {
-    	
-    	//check 
-    	if(this.participatingWorkersSet.contains(worker)){
-    		return false;
-    	}else {
-    		//
-    		if(worker == null || worker == "" || worker == " " ) {
-    			return false;
-    		}else {
-    			this.participatingWorkers.add(worker);
-    			return true;
-    		}
-    		
-    	}
-    	
-    }
-
-    /**
+   /**
      * @return String return the departmentLead
      */
     public String getDepartmentLead() {
         return departmentLead;
-    }
-
-    /**
-     * @param departmentLead the departmentLead to set
-     */
-    public void setDepartmentLead(String departmentLead) {
-        //TODO
-        this.departmentLead = departmentLead;
     }
 
 }
