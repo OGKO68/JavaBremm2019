@@ -40,15 +40,11 @@ public class Employee {
      * @param employeeName the employeeName to set
      */
     public boolean setEmployeeName(String employeeName, HashSet<String> employeeNameHashSet) {
-    	// if the project name is null, empty or a space it's wrong
-        if(employeeName == null || employeeName == "" || employeeName == " ") return false;
+    	
+        if(employeeName == null || employeeName == "" || employeeName == " ") { return false; }
         
-        //if the name is an the hashset it should be false
-        if( employeeNameHashSet.contains( employeeName ) ){
-        	 return false;
-        }
-        
-        // if everything is good so far than ther project should name should be fine and return 
+        if(employeeNameHashSet.contains( employeeName ) ){ return false; }
+
         this.employeeName = employeeName;
         return true;
     }
@@ -59,8 +55,10 @@ public class Employee {
      */
     public boolean setEmployeeSalary(int employeeSalary) {
         if (employeeSalary < 0 ) { return false; }
-        this.employeeSalary = employeeSalary;
-        return true;
+        else {
+            this.employeeSalary = employeeSalary;
+            return true;
+        }
     }
 
     /**

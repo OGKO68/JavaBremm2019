@@ -151,14 +151,11 @@ public class Project {
      * @param projectName the projectName to set
      */
     public boolean setProjectName(String projectName, HashSet<String> projectNameHashSet){
-    	HashSet<String> localizedProjectNameHashSet = projectNameHashSet;
     	// if the project name is null, empty or a space it's wrong
-        if(projectName == null || projectName == "" || projectName == " ") return false;
+        if(projectName == null || projectName == "" || projectName == " ") { return false; }
         
         //if the name is an the hashset it should be false
-        if( localizedProjectNameHashSet.contains( projectName ) ){
-        	 return false;
-        }
+        if( projectNameHashSet.contains( projectName ) ){ return false; }
         
         // if everything is good so far than ther project should name should be fine and return 
         this.projectName = projectName;

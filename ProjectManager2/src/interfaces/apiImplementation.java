@@ -10,68 +10,35 @@ public class apiImplementation implements ApiInterface {
 
 	private ArrayList<Project> projectArrayList;
 	private HashSet<String> projectNameHashSet;
-	
+	private ArrayList<Employee> employeeArrayList;
+	private HashSet<String> employeeNameHashSet;
 	//custom default constructor
 	public apiImplementation() {
 		this.projectArrayList = new ArrayList<Project>();
 		this.projectNameHashSet = new HashSet<String>();
+		this.employeeArrayList = new ArrayList<Employee>();
+		this.employeeNameHashSet = new HashSet<String>();
 	}
-	
-	/*
-	 * THIS IS NOT API IMPLEMENTATION
-	 * */
-	public ArrayList<Project> getProjectArrayList(){
-		return this.projectArrayList;
-	}
-	
-	/**
-	 * @param projectArrayList the projectArrayList to set
-	 */
-	public void setProjectArrayList(ArrayList<Project> projectArrayList) {
-		this.projectArrayList = projectArrayList;
-	}
-	
-	public HashSet<String> getProjectNameHashSet(){
-		return this.projectNameHashSet;
-	}
-	
-	/**
-	 * @param projectNameHashSet the projectNameHashSet to set
-	 */
-	public void setProjectNameHashSet(HashSet<String> projectNameHashSet) {
-		this.projectNameHashSet = projectNameHashSet;
-	}
-	/*
-	 * END OF THIS IMPLEMENTATION OBJECT METHODS
-	 * */
 
 	//IMPLEMENTATION START
 	@Override //DONE
 	public boolean createProject(String projectName, Calendar startDate, Calendar endDate){
 		
-		//work with local lists to only complete finished transactions
-		ArrayList<Project> localProjectArrayList = this.getProjectArrayList();
-		HashSet<String> localProjectNameHashSet = this.getProjectNameHashSet();
-		
 		//cereate a local project to add after the all checks to avoid having empty objects in ArrayList
 		Project localProject = new Project();
 		
 		// if the name is empty,space,null,not unq than false 
-		if(! localProject.setProjectName(projectName, localProjectNameHashSet) ) return false;
+		if(! localProject.setProjectName(projectName, projectNameHashSet) ) return false;
 		//check start date not null and if before end
 		if(! localProject.setProjectStartDate(startDate) ) return false;
 		//check end date not null and if after start
 		if(! localProject.setProjectEndDate(endDate)) return false;
 		
 		//add name to hash set
-		localProjectNameHashSet.add(projectName);
+		projectNameHashSet.add(projectName);
 		//add the Project to the List
-		localProjectArrayList.add(localProject);
-		
-		//update the lists
-		this.setProjectArrayList(localProjectArrayList);
-		this.setProjectNameHashSet(localProjectNameHashSet);
-		
+		projectArrayList.add(localProject);
+				
 		//success
 		return true;
 	}
@@ -83,14 +50,13 @@ public class apiImplementation implements ApiInterface {
 			if(this.projectArrayList.get(i).getProjectName() == projectNameOld) {
 				if( projectNameOld.equals(projectNameNew)){
 					//check start date not null and if before end
-					if(! this.projectArrayList.get(i).setProjectStartDate(startDate))return false;
+					if(!this.projectArrayList.get(i).setProjectStartDate(startDate))return false;
 					//check end date not null and if after start
 					if(!this.projectArrayList.get(i).setProjectEndDate(endDate))return false;
 					//success
 					return true;
 				}
 				else {
-					
 					// if the name is empty,space,null,not unq than false 
 					if(! this.projectArrayList.get(i).setProjectName(projectNameNew, this.projectNameHashSet) ) return false;
 					//check start date not null and if before end
@@ -131,26 +97,57 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public boolean createEmployee(String employeeName, int salary) {
-		// TODO Auto-generated method stub
-		return false;
+		Employee localEmployee = new Employee();
+		
+		if(! localEmployee.setEmployeeName(employeeName, employeeNameHashSet)) return false;
+
+		if(! localEmployee.setEmployeeSalary(salary)) return false;
+		//projectArrayList projectNameHashSetprojectNameHashSet
+
+		employeeNameHashSet.add(employeeName);
+		employeeArrayList.add(localEmployee);
+		
+		return true;
 	}
 
 	@Override
 	public boolean changeEmployee(String employeeNameOld, String employeeNameNew, int salary) {
-		// TODO Auto-generated method stub
-		return false;
+				
+		if(employeeNameOld.equals(employeeNameNew)){
+			for (int i = 0; i < employeeArrayList.size(); i++) {
+				if (employeeArrayList.get(i).getEmployeeName().equals(employeeNameOld)){
+					if(! employeeArrayList.get(i).setEmployeeSalary(salary)) return false;
+				}
+			}
+		}else{
+			for (int i = 0; i < employeeArrayList.size(); i++) {
+				if (employeeArrayList.get(i).getEmployeeName().equals(employeeNameOld)){
+					if(! employeeArrayList.get(i).setEmployeeName(employeeNameNew, employeeNameHashSet)) return false;
+					if(! employeeArrayList.get(i).setEmployeeSalary(salary)) return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public boolean deleteEmployee(String employeeName) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < employeeArrayList.size(); i++) {
+			if (employeeArrayList.get(i).getEmployeeName().equals(employeeName)){
+				employeeArrayList.remove(i);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public ArrayList<String> getEmployeeNames() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> allEmployeeList = new ArrayList<String>(employeeArrayList.size());
+		for (int i = 0; i < employeeArrayList.size(); i++) {
+			allEmployeeList.add(employeeArrayList.get(i).getEmployeeName());
+		}
+		return allEmployeeList;
 	}
 
 	@Override
