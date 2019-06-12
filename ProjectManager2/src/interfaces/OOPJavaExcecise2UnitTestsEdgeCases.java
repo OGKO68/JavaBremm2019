@@ -123,7 +123,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 			assertEquals(a,api.getProjectNames());
 		}
 	}
-	@Nested
+	@Nested //DONE
 	class CreateEmployee{
 		@Test
 		void correctInput() {
@@ -157,7 +157,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 		}
 		
 	}
-	@Nested
+	@Nested //DONE
 	class ChangeEmployee{
 		@Test
 		void correctInputOtherName() {
@@ -192,7 +192,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 		}
 		
 	}
-	@Nested
+	@Nested //DONE
 	class GetEmployeeNames{
 		@Test
 		void afterCreation() {
@@ -219,7 +219,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 		}
 		
 	}
-	@Nested
+	@Nested //DONE
 	class DeleteEmployees{
 		@Test
 		void correctInput() {
@@ -258,7 +258,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 		api.deleteEmployee("e1");
 		assertEquals(500,api.getMonthlyCostsOfProject("p1"));
 	}
-	@Nested
+	@Nested //DONE
 	class CreateDepartmentLead{
 		@Test
 		void correctInput() {
@@ -288,7 +288,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 		}
 		
 	}
-	@Nested
+	@Nested //DONE
 	class ChangeDepartmentLead{
 		@Test
 		void correctInputOtherName() {

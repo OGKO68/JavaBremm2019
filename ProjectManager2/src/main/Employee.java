@@ -75,6 +75,12 @@ public class Employee {
         this.employeeProjectList.add(projectName);
         return true;
     }
+    public boolean removeEmployeeProjectListe(String projectName) {
+        if(! employeeProjectSet.contains(projectName)) return false;
+        this.employeeProjectList.remove(projectName);
+        this.employeeProjectSet.remove(projectName);
+        return true;
+    }
 
     /**
      * @param employeeDepartmentLead the employeeDepartmentLead to set

@@ -19,7 +19,7 @@ class OOPJavaExcecise2UnitTests {
 		@Test
 		void createProject() {
 			assertEquals(true, api.createProject( "p1",new GregorianCalendar(2019,5,12), new GregorianCalendar(2019,6,13)));
-			ArrayList<String> al = new ArrayList<String>();
+			ArrayList<String> al =new ArrayList<String>();
 			al.add("p1");
 			assertEquals(al,api.getProjectNames());
 		}
@@ -305,7 +305,7 @@ class OOPJavaExcecise2UnitTests {
 		}
 		
 		@Test
-		//@Ignore //produces error
+		//@Ignore
 		void addEmployeeToAnotherProject() {
 			api.createEmployee( "e1",1000);
 			api.createDepartmentlead("d1", 3000);
@@ -368,6 +368,53 @@ class OOPJavaExcecise2UnitTests {
 		}
 		
 		
+		
+	}
+	
+	@Nested
+	class IO{
+		@Test
+		void saveLoadFile() {
+			String pathToFile="./testPrj.oop";
+			api.createEmployee( "e1",1000);
+			api.createEmployee( "e2",1000);
+			api.createDepartmentlead("d1", 3000);
+			api.createDepartmentlead("d2", 4000);
+			api.createProject( "p1",new GregorianCalendar(2019,6,12), new GregorianCalendar(2019,6,13));
+			api.addEmployeeToDepartment("e1", "d1");
+			api.addEmployeeToDepartment("e2", "d1");
+			api.addEmployeeToProject("e1", "p1");
+			api.addEmployeeToProject("e2", "p1");
+			api.addEmployeeToProject("d1", "p2");
+			
+			api.saveProjects(pathToFile);
+			
+			api.deleteEmployee("e1");
+			api.deleteEmployee("d1");
+			api.deleteProject("p1");
+			
+			api.loadProjects(pathToFile);
+			
+			ArrayList<String>p_al=new ArrayList<String>();
+			p_al.add("p1");
+			ArrayList<String>e1_al=new ArrayList<String>();
+			e1_al.add("e1");
+			e1_al.add("e2");
+			e1_al.add("d1");
+			e1_al.add("d2");
+			ArrayList<String>e2_al=new ArrayList<String>();
+			e2_al.add("e1");
+			e2_al.add("e2");
+			e2_al.add("d1");
+			ArrayList<String>d_al=new ArrayList<String>();
+			d_al.add("d1");
+			
+			assertEquals(e1_al,api.getEmployeeNames());
+			assertEquals(e2_al,api.getEmployeesOfDepartment("d1"));	
+			assertEquals(p_al,api.getProjectsOfEmployees("e1"));
+			assertEquals(d_al,api.getDepartmentLeadsOfProject("p1"));
+			assertEquals(5000,api.getMonthlyCostsOfDepartment("d1"));
+		}
 		
 	}
 	

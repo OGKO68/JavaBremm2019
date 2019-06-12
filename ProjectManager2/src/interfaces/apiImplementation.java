@@ -101,7 +101,7 @@ public class apiImplementation implements ApiInterface {
 		return localProjectNameList;
 	}
 
-	@Override
+	@Override //DONE
 	public boolean createEmployee(String employeeName, int salary) {
 		Employee localEmployee = new Employee();
 		
@@ -115,7 +115,7 @@ public class apiImplementation implements ApiInterface {
 		return true;
 	}
 
-	@Override
+	@Override //DONE
 	public boolean changeEmployee(String employeeNameOld, String employeeNameNew, int salary) {
 				
 		if(employeeNameOld.equals(employeeNameNew)){
@@ -139,7 +139,7 @@ public class apiImplementation implements ApiInterface {
 		
 	}
 
-	@Override
+	@Override //DONE
 	public boolean deleteEmployee(String employeeName) {
 		for (int i = 0; i < employeeArrayList.size(); i++) {
 			if (employeeArrayList.get(i).getEmployeeName().equals(employeeName)){
@@ -150,7 +150,7 @@ public class apiImplementation implements ApiInterface {
 		return false;
 	}
 
-	@Override
+	@Override //DONE
 	public ArrayList<String> getEmployeeNames() {
 		ArrayList<String> allEmployeeList = new ArrayList<String>(employeeArrayList.size());
 		for (int i = 0; i < employeeArrayList.size(); i++) {
@@ -162,7 +162,7 @@ public class apiImplementation implements ApiInterface {
 		return allEmployeeList;
 	}
 
-	@Override
+	@Override //DONE
 	public boolean createDepartmentlead(String departmentLeadName, int salary) {
 		DepartmentLead localDepartmentLead = new DepartmentLead();
 		
@@ -175,7 +175,7 @@ public class apiImplementation implements ApiInterface {
 		return true;
 	}
 
-	@Override
+	@Override //DONE
 	public boolean changeDepartmentlead(String departmentLeadNameOld, String departmentLeadNameNew, int salary) {
 		if(departmentLeadNameOld.equals(departmentLeadNameNew)){
 			for (int i = 0; i < departmentLeadList.size(); i++) {
@@ -197,7 +197,7 @@ public class apiImplementation implements ApiInterface {
 		return false;
 	}
 
-	@Override
+	@Override //DONE
 	public boolean deleteDepartmentlead(String departmentLeadName) {
 		for (int i = 0; i < departmentLeadList.size(); i++) {
 			if (departmentLeadList.get(i).getEmployeeName().equals(departmentLeadName)){
@@ -209,7 +209,7 @@ public class apiImplementation implements ApiInterface {
 		return false;
 	}
 
-	@Override
+	@Override //DONE
 	public ArrayList<String> getDepartmentLeadNames() {
 		ArrayList<String> allDepartmentLeadList = new ArrayList<String>(departmentLeadList.size());
 		for (int i = 0; i < departmentLeadList.size(); i++) {
@@ -218,15 +218,25 @@ public class apiImplementation implements ApiInterface {
 		return allDepartmentLeadList;
 	}
 
-	@Override
+	@Override 
 	public boolean addEmployeeToProject(String employeeName, String projectName) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < projectArrayList.size(); i++) {
+			if(projectArrayList.get(i).getProjectName().equals(projectName)){
+				projectArrayList.get(i).addParticipatingWorker(employeeName);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean removeEmployeeFromProject(String employeeName, String projectName) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < projectArrayList.size(); i++) {
+			if(projectArrayList.get(i).getProjectName().equals(projectName)){
+				projectArrayList.get(i).addParticipatingWorker(employeeName);
+				return true;
+			}
+		}
 		return false;
 	}
 
