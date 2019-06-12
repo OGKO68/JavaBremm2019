@@ -11,13 +11,17 @@ public class apiImplementation implements ApiInterface {
 	private ArrayList<Project> projectArrayList;
 	private HashSet<String> projectNameHashSet;
 	private ArrayList<Employee> employeeArrayList;
+	//shared
 	private HashSet<String> employeeNameHashSet;
+	private ArrayList<DepartmentLead> departmentLeadList;
+
 	//custom default constructor
 	public apiImplementation() {
 		this.projectArrayList = new ArrayList<Project>();
 		this.projectNameHashSet = new HashSet<String>();
 		this.employeeArrayList = new ArrayList<Employee>();
 		this.employeeNameHashSet = new HashSet<String>();
+		this.departmentLeadList = new ArrayList<DepartmentLead>();
 	}
 
 	//IMPLEMENTATION START
@@ -63,6 +67,8 @@ public class apiImplementation implements ApiInterface {
 					if(! this.projectArrayList.get(i).setProjectStartDate(startDate) ) return false;
 					//check end date not null and if after start
 					if(! this.projectArrayList.get(i).setProjectEndDate(endDate)) return false;
+					//remove name
+					projectNameHashSet.remove(projectNameOld);
 					//success
 					return true;
 				}
@@ -102,8 +108,7 @@ public class apiImplementation implements ApiInterface {
 		if(! localEmployee.setEmployeeName(employeeName, employeeNameHashSet)) return false;
 
 		if(! localEmployee.setEmployeeSalary(salary)) return false;
-		//projectArrayList projectNameHashSetprojectNameHashSet
-
+		
 		employeeNameHashSet.add(employeeName);
 		employeeArrayList.add(localEmployee);
 		
@@ -117,6 +122,7 @@ public class apiImplementation implements ApiInterface {
 			for (int i = 0; i < employeeArrayList.size(); i++) {
 				if (employeeArrayList.get(i).getEmployeeName().equals(employeeNameOld)){
 					if(! employeeArrayList.get(i).setEmployeeSalary(salary)) return false;
+					return true;
 				}
 			}
 		}else{
@@ -124,10 +130,13 @@ public class apiImplementation implements ApiInterface {
 				if (employeeArrayList.get(i).getEmployeeName().equals(employeeNameOld)){
 					if(! employeeArrayList.get(i).setEmployeeName(employeeNameNew, employeeNameHashSet)) return false;
 					if(! employeeArrayList.get(i).setEmployeeSalary(salary)) return false;
+					employeeNameHashSet.remove(employeeNameOld);
+					return true;
 				}
 			}
 		}
-		return true;
+		return false;
+		
 	}
 
 	@Override
@@ -147,31 +156,66 @@ public class apiImplementation implements ApiInterface {
 		for (int i = 0; i < employeeArrayList.size(); i++) {
 			allEmployeeList.add(employeeArrayList.get(i).getEmployeeName());
 		}
+		for (int i = 0; i < departmentLeadList.size(); i++) {
+			allEmployeeList.add(departmentLeadList.get(i).getEmployeeName());
+		}
 		return allEmployeeList;
 	}
 
 	@Override
 	public boolean createDepartmentlead(String departmentLeadName, int salary) {
-		// TODO Auto-generated method stub
-		return false;
+		DepartmentLead localDepartmentLead = new DepartmentLead();
+		
+		if(! localDepartmentLead.setEmployeeName(departmentLeadName, employeeNameHashSet)) return false;
+
+		if(! localDepartmentLead.setEmployeeSalary(salary)) return false;
+		
+		employeeNameHashSet.add(departmentLeadName);
+		departmentLeadList.add(localDepartmentLead);
+		return true;
 	}
 
 	@Override
 	public boolean changeDepartmentlead(String departmentLeadNameOld, String departmentLeadNameNew, int salary) {
-		// TODO Auto-generated method stub
+		if(departmentLeadNameOld.equals(departmentLeadNameNew)){
+			for (int i = 0; i < departmentLeadList.size(); i++) {
+				if (departmentLeadList.get(i).getEmployeeName().equals(departmentLeadNameOld)){
+					if(! departmentLeadList.get(i).setEmployeeSalary(salary)) return false;
+					return true;
+				}
+			}
+		}else{
+			for (int i = 0; i < departmentLeadList.size(); i++) {
+				if (departmentLeadList.get(i).getEmployeeName().equals(departmentLeadNameOld)){
+					if(! departmentLeadList.get(i).setEmployeeName(departmentLeadNameNew, employeeNameHashSet)) return false;
+					if(! departmentLeadList.get(i).setEmployeeSalary(salary)) return false;
+					employeeNameHashSet.remove(departmentLeadNameNew);
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteDepartmentlead(String departmentLeadName) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < departmentLeadList.size(); i++) {
+			if (departmentLeadList.get(i).getEmployeeName().equals(departmentLeadName)){
+				departmentLeadList.remove(i);
+				employeeNameHashSet.remove(departmentLeadName);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public ArrayList<String> getDepartmentLeadNames() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> allDepartmentLeadList = new ArrayList<String>(departmentLeadList.size());
+		for (int i = 0; i < departmentLeadList.size(); i++) {
+			allDepartmentLeadList.add(departmentLeadList.get(i).getEmployeeName());
+		}
+		return allDepartmentLeadList;
 	}
 
 	@Override

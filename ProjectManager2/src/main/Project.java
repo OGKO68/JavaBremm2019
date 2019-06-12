@@ -129,8 +129,7 @@ public class Project {
     
     
     public boolean addParticipatingWorker( String worker) {
-    	
-    	//check 
+    	//if contains the name is not unique so cant be added
     	if(this.participatingWorkersSet.contains(worker)){
     		return false;
     	}else {
@@ -152,7 +151,7 @@ public class Project {
      */
     public boolean setProjectName(String projectName, HashSet<String> projectNameHashSet){
     	// if the project name is null, empty or a space it's wrong
-        if(projectName == null || projectName == "" || projectName == " ") { return false; }
+        if(projectName == null || projectName == "" ) { return false; }
         
         //if the name is an the hashset it should be false
         if( projectNameHashSet.contains( projectName ) ){ return false; }
@@ -172,8 +171,10 @@ public class Project {
     /**
      * @param departmentLead the departmentLead to set
      */
-    public void setDepartmentLead(String departmentLead) {
+    public boolean setDepartmentLead(String departmentLead) {
+        if(departmentLead == null || departmentLead == "" ) { return false; }
         this.departmentLead = departmentLead;
+        return true;
     }
 
 

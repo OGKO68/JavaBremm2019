@@ -35,7 +35,7 @@ public class Employee {
         this.employeeProjectList = new ArrayList<String>();
         this.employeeDepartmentLead = new String();
     }
-
+    
     /**
      * @param employeeName the employeeName to set
      */
@@ -70,7 +70,7 @@ public class Employee {
     }
 
     public boolean addEmployeeProjectListe(String projectName) {
-        if(projectName == null || projectName == "" || projectName == " ") return false;
+        if(projectName == null || projectName == "") return false;
         if(employeeProjectSet.contains(projectName)) return false;
         this.employeeProjectList.add(projectName);
         return true;
@@ -112,6 +112,20 @@ public class Employee {
      */
     public String getEmployeeName() {
         return employeeName;
+    }
+
+    //setters for DepartmentLead
+    public void setEmployeeName2(){
+        this.employeeName = new String();
+    }
+    public void setEmployeeDepartmentLead2() {
+        this.employeeDepartmentLead = new String();
+    }
+    public void setEmployeeProjectList2() {
+        this.employeeProjectList = new ArrayList<String>();
+    }
+    public void setEmployeeSalary2() {
+        this.employeeSalary = null;
     }
 
 }

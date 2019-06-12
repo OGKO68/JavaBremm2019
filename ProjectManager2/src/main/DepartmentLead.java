@@ -16,16 +16,37 @@ public class DepartmentLead extends Employee {
     /** List of assigned Employees, all unasigned Emplyees will be deleted */
     public ArrayList<Employee> assignedEmployees;
 
+    public DepartmentLead(){
+        
+        this.setEmployeeName2();
+        this.setEmployeeDepartmentLead2();
+        this.setEmployeeSalary2();
+        this.setEmployeeProjectList2();
+        
+        this.assignedEmployees = new ArrayList<Employee>();
+
+    }
+
     /** returns List of all Projects subordinates work on */
     public ArrayList<String> allEmployeeProjects(){
-        // TODO implementation
         ArrayList<String> returnArrayList =  new ArrayList<String>();
+
+        for (int i = 0; i < assignedEmployees.size(); i++) {
+            returnArrayList.add(assignedEmployees.get(i).getEmployeeName());
+        }
+        
         return returnArrayList;
     }
 
     /** Calculates the Salarie of all subordinates Employees */
     public int employeesSalaries(){
-        return 1;
+        int salary = 0;
+        
+        for (int i = 0; i < assignedEmployees.size(); i++) {
+            salary = salary + assignedEmployees.get(i).getEmployeeSalary();
+        }
+
+        return salary;
     }
 	
 }
