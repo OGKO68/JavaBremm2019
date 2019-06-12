@@ -31,7 +31,7 @@ public class Employee {
     //create empty Empolyee Object
     public Employee(){
         this.employeeName = new String();
-        this.employeeSalary = new Integer();
+        this.employeeSalary = null;
         this.employeeProjectList = new ArrayList<String>();
         this.employeeDepartmentLead = new String();
     }
