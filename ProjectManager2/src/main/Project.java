@@ -147,19 +147,13 @@ public class Project {
     }
     
     public boolean removeParticipatingWorker( String worker) {
-    	if(participatingWorkersSet.contains(worker)){
-    		for(int i = 0 ; i < participatingWorkersSet.size(); i++) {
-    			if(participatingWorkers.get(i).equals(worker)) {
-    				participatingWorkers.remove(i);
-    				participatingWorkersSet.remove(worker);
-    				return true;
-    			}
-    		}
-    		return false;
+        if(worker == null || worker == ""){return false;}
+        if(participatingWorkers.contains(worker)){ 
+            participatingWorkers.remove(worker);
+            return true;
     	}else {
     		return false;    		
     	}
-    	
     }
 
     /**

@@ -82,6 +82,7 @@ public class apiImplementation implements ApiInterface {
 		for(int i = 0; this.projectArrayList.size() > i ; i++) {
 			if(projectArrayList.get(i).getProjectName().equals(projectName)) {
 				projectArrayList.remove(i);
+				projectNameHashSet.remove(projectName);
 				return true;
 			}
 		}
@@ -144,6 +145,7 @@ public class apiImplementation implements ApiInterface {
 		for (int i = 0; i < employeeArrayList.size(); i++) {
 			if (employeeArrayList.get(i).getEmployeeName().equals(employeeName)){
 				employeeArrayList.remove(i);
+				employeeNameHashSet.remove(employeeName);
 				return true;
 			}
 		}
@@ -242,22 +244,13 @@ public class apiImplementation implements ApiInterface {
 		}else {
 			return false;
 		}
-		
 	}
 
 	@Override
 	public boolean addEmployeeToDepartment(String employeeName, String nameOfDepartmentLead) {
 		if (employeeNameHashSet.contains(nameOfDepartmentLead) && employeeName.contains(employeeName)) {
 			for (int i = 0; i < departmentLeadList.size(); i++) {
-				if (departmentLeadList.get(i).getEmployeeName().equals(nameOfDepartmentLead)) {
-					Employee employeeToAdd = new Employee();
-					for (int j = 0; j < employeeArrayList.size(); i++) {
-						if(employeeArrayList.get(j).getEmployeeName().equals(employeeName)){
-							employeeToAdd = employeeArrayList.get(j);
-						}
-					}
-					departmentLeadList.get(i).addEmployee(employeeToAdd);
-				} 
+				departmentLeadList.get(i).addEmployee(employeeName);
 			}
 			return false;		
 		} else {
@@ -267,37 +260,92 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public boolean removeEmployeeFromDepartment(String employeeName, String nameOfDepartmentLead) {
-		// TODO Auto-generated method stub
-		return false;
+		if(employeeNameHashSet.contains(nameOfDepartmentLead)) {
+			for (int i = 0; i < departmentLeadList.size(); i++) {
+				if(departmentLeadList.get(i).getEmployeeName().equals(nameOfDepartmentLead)){
+					departmentLeadList.get(i).removeEmployee(employeeName);
+					return true;
+				}
+			}
+			return false;
+		}else {
+			return false;
+		}
 	}
 
 	@Override
 	public ArrayList<String> getEmployeesWorkingOnProject(String projectName) {
-		// TODO Auto-generated method stub
-		return null;
+		if(projectName == null || projectName == ""){return false;}
+		if(! projectNameHashSet.contains(projectName)){return false;}
+		for (int i = 0; i < projectArrayList.size(); i++) {
+			if (projectArrayList.get(i).getProjectName().equals(projectName)) {
+				return projectArrayList.get(i).getParticipatingWorkers();
+			}
+		}
 	}
 
 	@Override
 	public ArrayList<String> getDepartmentLeadsOfProject(String projectName) {
-		// TODO Auto-generated method stub
-		return null;
+		if(projectName == null || projectName == ""){return false;}
+		if(! projectNameHashSet.contains(projectName)){return false;}
+		ArrayList<String> empList = getEmployeesWorkingOnProject(projectName);
+		if(empList.size() == 0){return false;}
+		ArrayList<String> leadList = new ArrayList<String>();
+		HashSet<String> leadSet = new HashSet<String>();
+		//lel
+		for (int i = 0; i < empList.size(); i++) {
+			for (int j = 0; j < employeeArrayList.size(); j++) {
+				if (employeeArrayList.get(i).getEmployeeName().equals(empList.get(i))) {
+					if(leadSet.contains(employeeArrayLis.get(i).getEmployeeDepartmentLead())){
+						break;
+					}else{
+						leadList.add(employeeArrayLis.get(i).getEmployeeDepartmentLead()); 
+						leadSet.add(employeeArrayLis.get(i).getEmployeeDepartmentLead());
+					}
+				}
+			}	
+		}
+		return false;
 	}
 
 	@Override
 	public int getMonthlyCostsOfProject(String projectName) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(projectName == null || projectName == ""){return false;}
+		if(! projectNameHashSet.contains(projectName)){return false;}
+		
+		ArrayList<String> empList = getEmployeesWorkingOnProject(projectName);
+		String curEmpString = null;
+		int cost = 0;
+
+		for (int i = 0; i < empList.size(); i++) {
+			for (int j = 0; j < employeeArrayList.size(); j++) {
+				if (employeeArrayList.get(j).getEmployeeName().equals(empList.get(i))) {
+					cost = cost + employeeArrayList.get(j).getEmployeeSalary();
+					break;
+				}
+			}	
+		}
+		return cost;
 	}
 
 	@Override
 	public ArrayList<String> getEmployeesOfDepartment(String nameOfDepartmentLead) {
-		// TODO Auto-generated method stub
-		return null;
+		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return false;}
+		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return false;}
+		
+		for (int i = 0; i < departmentLeadList.size(); i++) {
+			if(departmentLeadList.get(i).getEmployeeName().equals(nameOfDepartmentLead)){
+				return departmentLeadList.get(i).getEmployeeProjectList();
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public ArrayList<String> getProjectsOfDepartment(String nameOfDepartmentLead) {
-		// TODO Auto-generated method stub
+		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return false;}
+		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return false;}
+
 		return null;
 	}
 
