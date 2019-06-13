@@ -19,7 +19,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 	private final apiImplementation api = new apiImplementation();
 	
 	//Proj, Emp, DepLeads Each for their own. No combinations
-	@Nested
+	@Nested //DONE
 	class CreateProject{
 		@Test
 		void correctInput() {
@@ -47,7 +47,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 			assertEquals(false, api.createProject( "p1",new GregorianCalendar(2019,6,12), new GregorianCalendar(2019,6,13)));
 		}		
 	}
-	@Nested
+	@Nested //DONE
 	class ChangeProject{
 		@Test
 		void correctInputOtherName() {
@@ -95,7 +95,7 @@ class OOPJavaExcecise2UnitTestsEdgeCases {
 			assertEquals(false, api.changeProject("p1", "p1",null, new GregorianCalendar(2019,6,13)));
 		}
 	}
-	@Nested
+	@Nested //DONE
 	class GetProjectNames{
 		@Test
 		void afterCreation() {

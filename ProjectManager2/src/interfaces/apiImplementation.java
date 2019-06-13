@@ -231,19 +231,38 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public boolean removeEmployeeFromProject(String employeeName, String projectName) {
-		for (int i = 0; i < projectArrayList.size(); i++) {
-			if(projectArrayList.get(i).getProjectName().equals(projectName)){
-				projectArrayList.get(i).addParticipatingWorker(employeeName);
-				return true;
+		if(projectNameHashSet.contains(projectName)) {
+			for (int i = 0; i < projectArrayList.size(); i++) {
+				if(projectArrayList.get(i).getProjectName().equals(projectName)){
+					projectArrayList.get(i).removeParticipatingWorker(employeeName);
+					return true;
+				}
 			}
+			return false;
+		}else {
+			return false;
 		}
-		return false;
+		
 	}
 
 	@Override
 	public boolean addEmployeeToDepartment(String employeeName, String nameOfDepartmentLead) {
-		// TODO Auto-generated method stub
-		return false;
+		if (employeeNameHashSet.contains(nameOfDepartmentLead) && employeeName.contains(employeeName)) {
+			for (int i = 0; i < departmentLeadList.size(); i++) {
+				if (departmentLeadList.get(i).getEmployeeName().equals(nameOfDepartmentLead)) {
+					Employee employeeToAdd = new Employee();
+					for (int j = 0; j < employeeArrayList.size(); i++) {
+						if(employeeArrayList.get(j).getEmployeeName().equals(employeeName)){
+							employeeToAdd = employeeArrayList.get(j);
+						}
+					}
+					departmentLeadList.get(i).addEmployee(employeeToAdd);
+				} 
+			}
+			return false;		
+		} else {
+			return false;
+		}
 	}
 
 	@Override

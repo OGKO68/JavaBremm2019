@@ -24,7 +24,13 @@ public class DepartmentLead extends Employee {
         this.setEmployeeProjectList2();
         
         this.assignedEmployees = new ArrayList<Employee>();
+    }
 
+    public void addEmployee(Employee employeeToAdd){
+        assignedEmployees.add(employeeToAdd);
+    }
+    public void removeEmployee(Employee employeeToRemove){
+        assignedEmployees.remove(employeeToRemove);
     }
 
     /** returns List of all Projects subordinates work on */
