@@ -289,9 +289,12 @@ public class apiImplementation implements ApiInterface {
 		if(projectName == null || projectName == ""){return false;}
 		if(! projectNameHashSet.contains(projectName)){return false;}
 		ArrayList<String> empList = getEmployeesWorkingOnProject(projectName);
+
 		if(empList.size() == 0){return false;}
+
 		ArrayList<String> leadList = new ArrayList<String>();
 		HashSet<String> leadSet = new HashSet<String>();
+
 		//lel
 		for (int i = 0; i < empList.size(); i++) {
 			for (int j = 0; j < employeeArrayList.size(); j++) {
@@ -346,19 +349,61 @@ public class apiImplementation implements ApiInterface {
 		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return false;}
 		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return false;}
 
-		return null;
+		ArrayList<String> empList = getEmployeesOfDepartment(nameOfDepartmentLead);
+		
+		if (empList.size() == 0) { return false; }
+
+		ArrayList<String> prjList = new ArrayList<String>();
+		HashSet<String> prjSet = new HashSet<String>();
+		
+		for (int i = 0; i < empList.size(); i++) {
+			for (int j = 0; j < employeeArrayList.size(); j++) {
+				if( employeeArrayList.get(j).getEmployeeName().equals(empList.get(i) ) ) {
+
+					if( employeeArrayList.get(j).getEmployeeProjectList().size() == 0 ){ break;}
+					ArrayList<String> locPrjList = new ArrayList<String>();
+					for (int l = 0; l < employeeArrayList.get(j).getEmployeeProjectList().size(); l++) {	
+						if(! prjSet.contains(employeeArrayList.get(j).getEmployeeProjectList().get(l))){
+							prjSet.add(employeeArrayList.get(j).getEmployeeProjectList().get(l));
+							prjList.add(employeeArrayList.get(j).getEmployeeProjectList().get(l));
+						}
+					}
+				}
+			}
+		}
+
+		return prjList;
 	}
 
 	@Override
 	public int getMonthlyCostsOfDepartment(String nameOfDepartmentLead) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return false;}
+		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return false;}
+		ArrayList<String> empList = getEmployeesOfDepartment(nameOfDepartmentLead);
+		int cost = 0;
+
+		for (int i = 0; i < empList.size(); i++) {
+			for (int j = 0; j < employeeArrayList.size(); j++) {
+				if(employeeArrayList.get(j).getEmployeeName().equals(empList.get(i))){
+					cost = cost + employeeArrayList.get(j).getEmployeeSalary();
+				}
+			}
+		}
+
+		return cost;
 	}
 
 	@Override
 	public ArrayList<String> getProjectsOfEmployees(String employeeName) {
-		// TODO Auto-generated method stub
-		return null;
+		if(employeeName == null || employeeName == ""){return false;}
+		if(! employeeNameHashSet.contains(employeeName)){return false;}
+
+		for (int i = 0; i < employeeArrayList.size(); i++) {
+			if(employeeArrayList.get(i).equals(employeeName)){
+				return employeeArrayList.get(i).getEmployeeProjectList();
+			}
+		}
+
 	}
 
 	@Override
