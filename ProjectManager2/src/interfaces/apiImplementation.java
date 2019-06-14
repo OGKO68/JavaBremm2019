@@ -248,6 +248,7 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public boolean addEmployeeToDepartment(String employeeName, String nameOfDepartmentLead) {
+		if(nameOfDepartmentLead == null || nameOfDepartmentLead == "" || employeeName == null || employeeName == ""){return false;}
 		if (employeeNameHashSet.contains(nameOfDepartmentLead) && employeeName.contains(employeeName)) {
 			for (int i = 0; i < departmentLeadList.size(); i++) {
 				departmentLeadList.get(i).addEmployee(employeeName);
@@ -275,46 +276,48 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public ArrayList<String> getEmployeesWorkingOnProject(String projectName) {
-		if(projectName == null || projectName == ""){return false;}
-		if(! projectNameHashSet.contains(projectName)){return false;}
+		if(projectName == null || projectName == ""){return new ArrayList<String>();}
+		if(! projectNameHashSet.contains(projectName)){return new ArrayList<String>();}
 		for (int i = 0; i < projectArrayList.size(); i++) {
 			if (projectArrayList.get(i).getProjectName().equals(projectName)) {
 				return projectArrayList.get(i).getParticipatingWorkers();
 			}
 		}
+		return null;
 	}
 
 	@Override
 	public ArrayList<String> getDepartmentLeadsOfProject(String projectName) {
-		if(projectName == null || projectName == ""){return false;}
-		if(! projectNameHashSet.contains(projectName)){return false;}
+		if(projectName == null || projectName == ""){return new ArrayList<String>();}
+		if(! projectNameHashSet.contains(projectName)){return new ArrayList<String>();}
 		ArrayList<String> empList = getEmployeesWorkingOnProject(projectName);
 
-		if(empList.size() == 0){return false;}
+		if(empList.size() == 0){return new ArrayList<String>();}
 
 		ArrayList<String> leadList = new ArrayList<String>();
 		HashSet<String> leadSet = new HashSet<String>();
 
 		//lel
 		for (int i = 0; i < empList.size(); i++) {
+			if ( employeeArrayList.size() == 0) {return new ArrayList<String>();}
 			for (int j = 0; j < employeeArrayList.size(); j++) {
-				if (employeeArrayList.get(i).getEmployeeName().equals(empList.get(i))) {
-					if(leadSet.contains(employeeArrayLis.get(i).getEmployeeDepartmentLead())){
+				if (employeeArrayList.get(j).getEmployeeName().equals(empList.get(i))) {
+					if(leadSet.contains(employeeArrayList.get(i).getEmployeeDepartmentLead())){
 						break;
 					}else{
-						leadList.add(employeeArrayLis.get(i).getEmployeeDepartmentLead()); 
-						leadSet.add(employeeArrayLis.get(i).getEmployeeDepartmentLead());
+						leadList.add(employeeArrayList.get(i).getEmployeeDepartmentLead()); 
+						leadSet.add(employeeArrayList.get(i).getEmployeeDepartmentLead());
 					}
 				}
 			}	
 		}
-		return false;
+		return new ArrayList<String>();
 	}
 
 	@Override
 	public int getMonthlyCostsOfProject(String projectName) {
-		if(projectName == null || projectName == ""){return false;}
-		if(! projectNameHashSet.contains(projectName)){return false;}
+		if(projectName == null || projectName == ""){return 0;}
+		if(! projectNameHashSet.contains(projectName)){return 0;}
 		
 		ArrayList<String> empList = getEmployeesWorkingOnProject(projectName);
 		String curEmpString = null;
@@ -333,25 +336,25 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public ArrayList<String> getEmployeesOfDepartment(String nameOfDepartmentLead) {
-		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return false;}
-		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return false;}
+		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return new ArrayList<String>();}
+		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return new ArrayList<String>();}
 		
 		for (int i = 0; i < departmentLeadList.size(); i++) {
 			if(departmentLeadList.get(i).getEmployeeName().equals(nameOfDepartmentLead)){
 				return departmentLeadList.get(i).getEmployeeProjectList();
 			}
 		}
-		return false;
+		return new ArrayList<String>();
 	}
 
 	@Override
 	public ArrayList<String> getProjectsOfDepartment(String nameOfDepartmentLead) {
-		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return false;}
-		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return false;}
+		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return new ArrayList<String>();}
+		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return new ArrayList<String>();}
 
 		ArrayList<String> empList = getEmployeesOfDepartment(nameOfDepartmentLead);
 		
-		if (empList.size() == 0) { return false; }
+		if (empList.size() == 0) { return new ArrayList<String>(); }
 
 		ArrayList<String> prjList = new ArrayList<String>();
 		HashSet<String> prjSet = new HashSet<String>();
@@ -361,7 +364,6 @@ public class apiImplementation implements ApiInterface {
 				if( employeeArrayList.get(j).getEmployeeName().equals(empList.get(i) ) ) {
 
 					if( employeeArrayList.get(j).getEmployeeProjectList().size() == 0 ){ break;}
-					ArrayList<String> locPrjList = new ArrayList<String>();
 					for (int l = 0; l < employeeArrayList.get(j).getEmployeeProjectList().size(); l++) {	
 						if(! prjSet.contains(employeeArrayList.get(j).getEmployeeProjectList().get(l))){
 							prjSet.add(employeeArrayList.get(j).getEmployeeProjectList().get(l));
@@ -377,8 +379,8 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public int getMonthlyCostsOfDepartment(String nameOfDepartmentLead) {
-		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return false;}
-		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return false;}
+		if(nameOfDepartmentLead == null || nameOfDepartmentLead == ""){return 0;}
+		if(! employeeNameHashSet.contains(nameOfDepartmentLead)){return 0;}
 		ArrayList<String> empList = getEmployeesOfDepartment(nameOfDepartmentLead);
 		int cost = 0;
 
@@ -395,14 +397,15 @@ public class apiImplementation implements ApiInterface {
 
 	@Override
 	public ArrayList<String> getProjectsOfEmployees(String employeeName) {
-		if(employeeName == null || employeeName == ""){return false;}
-		if(! employeeNameHashSet.contains(employeeName)){return false;}
+		if(employeeName == null || employeeName == ""){return new ArrayList<String>();}
+		if(! employeeNameHashSet.contains(employeeName)){return new ArrayList<String>();}
 
 		for (int i = 0; i < employeeArrayList.size(); i++) {
 			if(employeeArrayList.get(i).equals(employeeName)){
 				return employeeArrayList.get(i).getEmployeeProjectList();
 			}
 		}
+		return new ArrayList<String>();
 
 	}
 
